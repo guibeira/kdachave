@@ -302,7 +302,7 @@
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.html">
+                        <a href="{% url 'home' %}">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -360,12 +360,15 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
+                                <a href="{% url 'propriedade:home' %}">Home</a>
+                            </li>
+                            <li>
                                 <a href="javascript:void(0);" class="menu-toggle">
                                     <span>Cards</span>
                                 </a>
                                 <ul class="ml-menu">
-                                    <li>
-                                        <a href="pages/widgets/cards/basic.html">Basic</a>
+                                     <li>
+                                        <a href="{% url 'propriedade:home' %}">Home</a>
                                     </li>
                                     <li>
                                         <a href="pages/widgets/cards/colored.html">Colored</a>
@@ -932,6 +935,10 @@
 
     <!-- Demo Js -->
     <script src="{% static 'js/demo.js' %}"></script>
+    <script src="{% static 'js/datatables/media/js/jquery.dataTables.js' %}"></script>
+    
+    {% block extrajs %}
+    {% endblock %}
 </body>
 
 </html>
