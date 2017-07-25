@@ -1,0 +1,1 @@
+web: gunicorn kdachave.wsgi --log-file -
