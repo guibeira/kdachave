@@ -13,7 +13,7 @@
     <!-- Google Fonts -->
     <link href="{% static 'css/fontroboto.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/materialicon.css' %}" rel="stylesheet" type="text/css">
-        
+
     <!-- Bootstrap Core Css -->
     <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
@@ -935,10 +935,11 @@
 
     <!-- Demo Js -->
     <script src="{% static 'js/demo.js' %}"></script>
-    <script src="{% static 'js/datatables/media/js/jquery.dataTables.js' %}"></script>
-    
-    {% block extrajs %}
-    {% endblock %}
+    <script src="{% static 'plugins/jquery-datatable/jquery.dataTables.js' %}"></script>
+
+
 </body>
 
 </html>
+{% block extrajs %}
+{% endblock extrajs %}
