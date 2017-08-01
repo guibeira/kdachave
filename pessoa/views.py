@@ -37,6 +37,11 @@ class ProprietatioUpdate(UpdateView):
     template_name = 'form.html'
     success_url = reverse_lazy('proprietariohome')
 
+class DeleteProprietatio(DeleteView):
+    model = Pessoa
+    success_url = reverse_lazy('proprietariohome')
+    template_name = 'confirmdelete.html'
+
 def pessoahome(request):
     pessoas = Pessoa.objects.filter(proprietario=False)
     context = {
