@@ -1,19 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import ProprietarioForm, PessoaForm
+from pessoa.models import Pessoa
 # Create your views here.
 
 def proprietariohome(request):
-    return render(request, 'pessoa/proprietariohome.html')
+    proprietarios = Pessoa.objects.filter(proprietario=True)
+    context = {
+        'proprietarios' : proprietarios
+    }
+    return render(request, 'pessoa/proprietariohome.html', context )
 
 def proprietariocreate(request):
     if request.method == 'POST':
         form = ProprietarioForm(request.POST)
         if form.is_valid():
-            print('formulário valido')
+            pessoa = form.save()
+            pessoa.proprietario = True
+            pessoa.save()
+            return redirect('proprietariohome')
         else:
-            print('deu ruim')
-        return HttpResponse(status=200)
+            return render(request, 'form.html', {'form': form})
     else:
         form = ProprietarioForm()
         context = {

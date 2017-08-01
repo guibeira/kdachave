@@ -23,7 +23,8 @@
                 </div>
                 <div class="body">
                     <!-- <div id="real_time_chart" class="dashboard-flot-chart"></div> -->
-                <form>
+                <form method="POST">
+                    {% csrf_token %}
                     {% for field in form %}
                     <label for="password">{{field.label}}</label>
                     <div class="form-group">
