@@ -39,9 +39,14 @@
             </div>
         </div>
     </div>
+    <select class="selectpicker">
+      <option>Mustard</option>
+      <option>Ketchup</option>
+      <option>Relish</option>
+    </select>
 
 
-  
+
 </div>
 {% endblock content %}
 
@@ -49,7 +54,7 @@
 <script>
     $(document).ready(function(){
         $('.table').DataTable();
-        $('.selectpicker').selectpicker({
+        $('select').selectpicker({
             style: 'btn-info',
             size: 4
         });

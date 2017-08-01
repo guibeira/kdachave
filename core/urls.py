@@ -1,9 +1,14 @@
 from django.conf.urls import url, include
 from . import views
+from pessoa import views as pessoaview
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),
     url(r'propriedade/', include('propriedade.urls', namespace="propriedade")),
-    url(r'proprietario/', include('pessoa.urls', namespace="proprietario")),
+
+    url(r'proprietario/$', pessoaview.proprietariohome, name='proprietariohome'),
+    url(r'proprietario/create$', pessoaview.proprietariocreate, name='proprietariocreate'),
+    url(r'pessoa/$', pessoaview.pessoahome, name='pessoahome'),
+    url(r'pessoa/create$', pessoaview.pessoacreate, name='pessoacreate'),
 
 ]
