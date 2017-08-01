@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'proprietario/create$', pessoaview.proprietariocreate, name='proprietariocreate'),
     url(r'pessoa/$', pessoaview.pessoahome, name='pessoahome'),
     url(r'pessoa/create$', pessoaview.pessoacreate, name='pessoacreate'),
+    url(r'^proprietario/update/(?P<pk>[0-9]+)$', pessoaview.ProprietatioUpdate.as_view(), name='proprietarioupdate'),
 
 ]

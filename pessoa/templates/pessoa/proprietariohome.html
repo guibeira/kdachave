@@ -41,22 +41,34 @@
               							Telefone Residencial
               						</th>
               						<th>
-                            Celular
+                                        Celular
+                                    </th>
+                                    <th>
+                                       Editar
+                                      </th>
+                                     <th>
+                                       Deletar
               						</th>
               					</tr>
               				</thead>
               				<tbody>
                           {% for proprietario in proprietarios %}
                               <tr>
-                                  <td>
-                                      {{ proprietario }}
-                                  </td>
-                                  <td>
+                                <td>
+                                    {{ proprietario }}
+                                </td>
+                                <td>
                                       {{ proprietario.telefoneResidencial }}
-                                  </td>
-                                  <td>
+                                </td>
+                                <td>
                                       {{ proprietario.celular1 }}
-                                  </td>
+                                </td>
+                                <td>
+                                    <a href="{% url 'proprietarioupdate' proprietario.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                                 </td>
+                                 <td>
+                                    <a href="{% url 'proprietarioupdate' proprietario.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
+                                 </td>
                               </tr>
                           {% endfor %}
               				</tbody>
