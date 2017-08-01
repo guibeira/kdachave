@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
 from .forms import ProprietarioForm, PessoaForm
 from pessoa.models import Pessoa
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
 
 def proprietariohome(request):
@@ -28,6 +30,12 @@ def proprietariocreate(request):
             'objeto': 'Proprietario',
         }
         return render(request, 'form.html', context)
+
+class ProprietatioUpdate(UpdateView):
+    model = Pessoa
+    form_class = ProprietarioForm
+    template_name = 'form.html'
+    success_url = reverse_lazy('proprietariohome')
 
 def pessoahome(request):
     return render(request, 'pessoa/pessoahome.html')
