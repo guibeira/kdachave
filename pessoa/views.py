@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
-from .forms import ProprietarioForm, PessoaForm
+from .forms import ProprietarioForm, PessoaForm, UserForm
 from pessoa.models import Pessoa
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
@@ -38,13 +38,35 @@ class ProprietatioUpdate(UpdateView):
     success_url = reverse_lazy('proprietariohome')
 
 def pessoahome(request):
-    return render(request, 'pessoa/pessoahome.html')
+    pessoas = Pessoa.objects.filter(proprietario=False)
+    context = {
+        'pessoas' : pessoas
+    }
+    return render(request, 'pessoa/pessoahome.html', context)
 
 def pessoacreate(request):
-    form = PessoaForm()
-    context = {
-        'form': form,
-        'objeto': 'Pessoa',
-    }
+    if request.method == 'POST':
+        form = PessoaForm(request.POST)
+        userForm = UserForm(request.POST)
+        if form.is_valid() and userForm.is_valid():
+            password = userForm.cleaned_data['password']
+            user = userForm.save()
+            p1 = form.save()
+            user.set_password(password)
+            user.save()
+            p1.user = user
+            p1.save()
 
-    return render(request, 'form.html', context)
+            return redirect('pessoahome')
+        else:
+            return render(request, 'form.html', {'form': form})
+    else:
+        form = PessoaForm()
+        userForm = UserForm()
+        context = {
+            'form': form,
+            'objeto': 'Pessoa',
+            'userForm':userForm,
+        }
+
+        return render(request, 'form.html', context)

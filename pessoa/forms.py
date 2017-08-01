@@ -1,5 +1,6 @@
 from django import forms
 from .models import Pessoa
+from django.contrib.auth.models import User
 
 
 class ProprietarioForm(forms.ModelForm):
@@ -11,4 +12,10 @@ class ProprietarioForm(forms.ModelForm):
 class PessoaForm(forms.ModelForm):
     class Meta:
         model = Pessoa
-        fields = ['user', 'nome','telefoneComercial', 'telefoneResidencial', 'celular1', 'celular2', 'endereco', ]
+        fields = ['nome','telefoneComercial', 'telefoneResidencial', 'celular1', 'celular2', 'endereco', ]
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+    class Meta:
+        model = User
+        fields = ['username', ]
