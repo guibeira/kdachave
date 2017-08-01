@@ -7,3 +7,4 @@ molho/migrations/*
 pessoa/migrations/*
 endereco/migrations/*
 .env
+db.sqlite3
