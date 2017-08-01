@@ -6,3 +6,6 @@ class Endereco(models.Model):
     logradouro = models.TextField()
     cidade = models.CharField(max_length=30)
     estado = models.CharField(max_length=2)
+
+    def __str__(self):
+        return self.logradouro
