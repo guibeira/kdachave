@@ -6,4 +6,4 @@ class PropriedadeForm(forms.ModelForm):
     
     class Meta:
         model = Propriedade
-        fields = ['tipo', 'proprietario' , 'complemento', 'numero']
+        fields = [ 'numero','complemento', 'nome', 'tipo', 'proprietario' , ]
