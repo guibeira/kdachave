@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
-from .forms import ProprietarioForm, PessoaForm, UserForm
+from .forms import ProprietarioForm, PessoaForm, UserForm, UserWithoutPasswordForm
 from pessoa.models import Pessoa
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # Create your views here.
@@ -43,11 +43,28 @@ class DeleteProprietatio(DeleteView):
     success_url = reverse_lazy('proprietariohome')
     template_name = 'confirmdelete.html'
 
-class PessoaUpdate(UpdateView):
-    model = Pessoa
-    form_class = PessoaForm
-    template_name = 'form.html'
-    success_url = reverse_lazy('pessoahome')
+def pessoaUpdate(request, pk):
+    pessoa = get_object_or_404(Pessoa,pk=pk)
+    if request.method == 'POST':
+        form = PessoaForm(request.POST, instance=pessoa)
+        userForm = UserWithoutPasswordForm(request.POST, instance=pessoa.user)
+        if form.is_valid() and userForm.is_valid():
+            user = userForm.save()
+            p1 = form.save()
+            return redirect('pessoahome')
+        else:
+            return render(request, 'form.html', {'form': form})
+    else:
+        form = PessoaForm(instance=pessoa)
+        userForm = UserWithoutPasswordForm(instance=pessoa.user)
+        context = {
+            'form': form,
+            'objeto': 'Pessoa',
+            'userForm':userForm,
+        }
+
+        return render(request, 'form.html', context)
+
 
 class DeletePessoa(DeleteView):
     model = Pessoa

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=100)
-    user = models.ForeignKey('auth.User', null=True, blank=True)
+    user = models.ForeignKey('auth.User', null=True, blank=True, on_delete=models.CASCADE)
     telefoneComercial = models.CharField('Telefone Comercial', max_length=100)
     telefoneResidencial = models.CharField('Telefone Residencial', max_length=100)
     celular1 = models.CharField('Celular 1', max_length=100)

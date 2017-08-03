@@ -19,3 +19,8 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', ]
+
+class UserWithoutPasswordForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', ]

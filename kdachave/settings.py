@@ -28,6 +28,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1', 'kdachave.herokuapp.com']
 
+READ_ONLY_FILE = os.path.join(BASE_DIR, 'readonly')
 
 # Application definition
 

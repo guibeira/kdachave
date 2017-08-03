@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'pessoa/create$', pessoaview.pessoacreate, name='pessoacreate'),
     url(r'^proprietario/update/(?P<pk>[0-9]+)$', pessoaview.ProprietatioUpdate.as_view(), name='proprietarioupdate'),
     url(r'^proprietario/deletar/(?P<pk>[0-9]+)/$', pessoaview.DeleteProprietatio.as_view(), name='proprietariodelete'),
-    url(r'^pessoa/update/(?P<pk>[0-9]+)$', pessoaview.PessoaUpdate.as_view(), name='pessoaupdate'),
+    url(r'^pessoa/update/(?P<pk>[0-9]+)$', pessoaview.pessoaUpdate, name='pessoaupdate'),
     url(r'^pessoa/deletar/(?P<pk>[0-9]+)/$', pessoaview.DeletePessoa.as_view(), name='pessoadelete'),
 ]
