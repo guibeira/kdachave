@@ -12,7 +12,7 @@
 
     <!-- Google Fonts -->
     <link href="{% static 'css/fontroboto.css' %}" rel="stylesheet" type="text/css">
-     <link href="{% static 'css/materialicon.css' %}" rel="stylesheet" type="text/css"> 
+     <link href="{% static 'css/materialicon.css' %}" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core Css -->
     <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
@@ -267,6 +267,7 @@
                         </ul>
                     </li>
                     <!-- #END# Tasks -->
+                    <li><a href="{% url 'logout' %}" class="js-input" data-close="true"><i class="material-icons">input</i></a></li>
                     <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
@@ -293,7 +294,7 @@
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                             <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="{% url 'logout' %}"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>

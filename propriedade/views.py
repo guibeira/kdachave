@@ -1,13 +1,18 @@
 from django.shortcuts import render, redirect
 from .forms import PropriedadeForm
-from endereco.forms import EnderecoForm
-# Create your views here.
-def home(request):
 
+from endereco.forms import EnderecoForm
+
+from django.contrib.auth.decorators import login_required, permission_required
+
+# Create your views here.
+
+@login_required
+def home(request):
     return render(request, 'propriedade/home.html')
 
+@login_required
 def create(request):
-
     if request.method == "POST":
         form = PropriedadeForm(request.POST)
         endereco = EnderecoForm(request.POST)
@@ -30,7 +35,7 @@ def create(request):
         form = PropriedadeForm()
         endereco = EnderecoForm()
         context = {
-            'form': form, 
+            'form': form,
             'endereco' : endereco,
             'objeto' : 'Propriedade',
         }

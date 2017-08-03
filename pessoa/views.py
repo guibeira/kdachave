@@ -4,8 +4,10 @@ from django.http import HttpResponse
 from .forms import ProprietarioForm, PessoaForm, UserForm, UserWithoutPasswordForm
 from pessoa.models import Pessoa
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
 
+@login_required
 def proprietariohome(request):
     proprietarios = Pessoa.objects.filter(proprietario=True)
     context = {
@@ -13,6 +15,7 @@ def proprietariohome(request):
     }
     return render(request, 'pessoa/proprietariohome.html', context )
 
+@login_required
 def proprietariocreate(request):
     if request.method == 'POST':
         form = ProprietarioForm(request.POST)
@@ -31,6 +34,7 @@ def proprietariocreate(request):
         }
         return render(request, 'form.html', context)
 
+
 class ProprietatioUpdate(UpdateView):
     model = Pessoa
     form_class = ProprietarioForm
@@ -43,6 +47,7 @@ class DeleteProprietatio(DeleteView):
     success_url = reverse_lazy('proprietariohome')
     template_name = 'confirmdelete.html'
 
+@login_required
 def pessoaUpdate(request, pk):
     pessoa = get_object_or_404(Pessoa,pk=pk)
     if request.method == 'POST':
@@ -71,7 +76,7 @@ class DeletePessoa(DeleteView):
     success_url = reverse_lazy('pessoahome')
     template_name = 'confirmdelete.html'
 
-
+@login_required
 def pessoahome(request):
     pessoas = Pessoa.objects.filter(proprietario=False)
     context = {
@@ -79,6 +84,7 @@ def pessoahome(request):
     }
     return render(request, 'pessoa/pessoahome.html', context)
 
+@login_required
 def pessoacreate(request):
     if request.method == 'POST':
         form = PessoaForm(request.POST)
