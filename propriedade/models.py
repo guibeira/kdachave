@@ -5,7 +5,8 @@ class Propriedade(models.Model):
 
     numero = models.IntegerField()
     tipo = models.ForeignKey('TipoPropriedade')
-    endereco = models.ForeignKey('endereco.Endereco')
+    endereco = models.ForeignKey('endereco.Endereco', null=True)
+    complemento = models.TextField()
     proprietario = models.ForeignKey('pessoa.Pessoa')
 
     def __str__(self):

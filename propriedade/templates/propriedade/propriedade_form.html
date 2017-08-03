@@ -12,7 +12,7 @@
                 <div class="header">
                     <div class="row clearfix">
                         <div class="col-xs-12 col-sm-6">
-                            <h2>Adicionar Propriedade</h2>
+                            <h2>Adicionar {{objeto}}</h2>
                         </div>
                         <div class="col-xs-12 col-sm-6 align-right">
                             <div class="panel-switch-btn">
@@ -23,25 +23,26 @@
                 </div>
                 <div class="body">
                     <!-- <div id="real_time_chart" class="dashboard-flot-chart"></div> -->
-                <form>
-                    <label for="email_address">Email Address</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            <input type="text" id="email_address" class="form-control" placeholder="Enter your email address">
-                        </div>
-                    </div>
+                <form method="POST">
+                    {% csrf_token %}
                     {% for field in form %}
-                    <label for="password">{{field.label}}</label>
-                    <div class="form-group">
-                        <div class="form-line">
-                            {{ field|attr:"class:form-control" }}
-                        </div>
-                    </div>
+                      <label for="password">{{field.label}}</label>
+                      <div class="form-group">
+                          <div class="form-line">
+                              {{ field|attr:"class:form-control" }}
+                          </div>
+                      </div>
                      {% endfor %}
-                    <input type="checkbox" id="remember_me" class="filled-in">
-                    <label for="remember_me">Remember Me</label>
+                    {% for field in endereco %}
+                      <label for="password">{{field.label}}</label>
+                      <div class="form-group">
+                          <div class="form-line">
+                              {{ field|attr:"class:form-control" }}
+                          </div>
+                      </div>
+                     {% endfor %}
                     <br>
-                    <button type="button" class="btn btn-primary m-t-15 waves-effect">LOGIN</button>
+                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
                 </form>
                 </div>
             </div>
@@ -49,7 +50,6 @@
     </div>
 
 
-  
 </div>
 {% endblock content %}
 
@@ -57,10 +57,11 @@
 <script>
     $(document).ready(function(){
         $('.table').DataTable();
-        $('.selectpicker').selectpicker({
+        $('select').selectpicker({
             style: 'btn-info',
             size: 4
         });
+        $('#id_telefoneResidencial, #id_telefoneComercial, #id_celular1, #id_celular2').inputmask('(99) 99999-9999');
 
     });
 </script>
