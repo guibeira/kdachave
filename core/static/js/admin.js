@@ -49,8 +49,13 @@ $.AdminBSB.options = {
 $.AdminBSB.leftSideBar = {
     activate: function () {
         var urlpath = window.location.pathname.split('/');
-        var elementactive = $('a[href="/'+urlpath[1]+'/"]', $('.menu'));
-        elementactive.parents('li').addClass('active');
+        var hrefpath= window.location.pathname;
+        if(urlpath[1]){
+          hrefpath = '/'+urlpath[1]+'/';
+        }
+          var elementactive = $('a[href="'+hrefpath+'"]', $('.menu'));
+          elementactive.parents('li').addClass('active');
+        
 
         var _this = this;
         var $body = $('body');
