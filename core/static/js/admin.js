@@ -48,6 +48,9 @@ $.AdminBSB.options = {
 */
 $.AdminBSB.leftSideBar = {
     activate: function () {
+        var elementactive = $('a[href="'+window.location.pathname+'"]', $('.menu'));
+        elementactive.parents('li').addClass('active');
+
         var _this = this;
         var $body = $('body');
         var $overlay = $('.overlay');
@@ -70,8 +73,6 @@ $.AdminBSB.leftSideBar = {
         //When page load
         $.each($('.menu .list li.active'), function (i, val) {
             var $activeAnchors = $(val).find('a:eq(0)');
-            console.log($activeAnchors);
-
             $activeAnchors.addClass('toggled');
             $activeAnchors.next().show();
         });
