@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from .forms import ProprietarioForm, PessoaForm, UserForm, UserWithoutPasswordForm
 from pessoa.models import Pessoa
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required, permission_required 
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 @login_required
@@ -35,14 +36,14 @@ def proprietariocreate(request):
         return render(request, 'form.html', context)
 
 
-class ProprietatioUpdate(UpdateView):
+class ProprietatioUpdate(LoginRequiredMixin, UpdateView):
     model = Pessoa
     form_class = ProprietarioForm
     template_name = 'form.html'
     success_url = reverse_lazy('proprietariohome')
 
 
-class DeleteProprietatio(DeleteView):
+class DeleteProprietatio(LoginRequiredMixin, DeleteView):
     model = Pessoa
     success_url = reverse_lazy('proprietariohome')
     template_name = 'confirmdelete.html'
@@ -71,7 +72,7 @@ def pessoaUpdate(request, pk):
         return render(request, 'form.html', context)
 
 
-class DeletePessoa(DeleteView):
+class DeletePessoa(LoginRequiredMixin, DeleteView):
     model = Pessoa
     success_url = reverse_lazy('pessoahome')
     template_name = 'confirmdelete.html'
