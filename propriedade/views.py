@@ -46,8 +46,9 @@ def create(request):
         }
         return render(request, 'propriedade/propriedade_form.html', context)
 
+
 class DeletePropriedade(LoginRequiredMixin, DeleteView):
-    print('caiu aqui');
+
     model = Propriedade
     success_url = reverse_lazy('propriedade:home')
     template_name = 'confirmdelete.html'
