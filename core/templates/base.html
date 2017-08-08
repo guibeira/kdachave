@@ -304,7 +304,7 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li>
+                    <li class="active">
                         <a href="{% url 'home' %}">
                             <i class="material-icons">home</i>
                             <span>Home</span>
@@ -317,20 +317,19 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url 'pessoahome' %}" class="">
+                                <a href="{% url 'pessoahome' %}" class="menu-toggle">
                                     <i class="material-icons">people</i>
                                     <span>Pessoas</span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'proprietariohome' %}" class="">
+                                <a href="{% url 'proprietariohome' %}" class="menu-toggle">
                                     <i class="material-icons">person</i>
                                     <span>Proprietarios</span>
                                 </a>
+
                             </li>
                         </ul>
                     </li>
-                    <li >
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">domain</i>
                             <span>Propriedades</span>

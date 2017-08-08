@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from endereco.forms import EnderecoForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -45,6 +46,8 @@ def create(request):
         }
         return render(request, 'propriedade/propriedade_form.html', context)
 
+
+
 def updatePropriedade(request, pk):
     propriedade = get_object_or_404(Propriedade,pk=pk)
     if request.method == 'POST':
@@ -73,7 +76,8 @@ def updatePropriedade(request, pk):
         return render(request, 'propriedade/propriedade_form.html', context)
 
 
-class DeletePropriedade(DeleteView):
+class DeletePropriedade(LoginRequiredMixin, DeleteView):
+
     model = Propriedade
     success_url = reverse_lazy('propriedade:home')
     template_name = 'confirmdelete.html'
