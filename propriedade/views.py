@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PropriedadeForm
 from .models import Propriedade
 from django.core.urlresolvers import reverse_lazy
@@ -44,6 +44,35 @@ def create(request):
             'endereco' : endereco,
             'objeto' : 'Propriedade',
         }
+        return render(request, 'propriedade/propriedade_form.html', context)
+
+
+
+def updatePropriedade(request, pk):
+    propriedade = get_object_or_404(Propriedade,pk=pk)
+    if request.method == 'POST':
+        form = PropriedadeForm(request.POST, instance=propriedade)
+        enderecoForm = EnderecoForm(request.POST, instance=propriedade.endereco)
+        if form.is_valid() and enderecoForm.is_valid():
+            endereco = enderecoForm.save()
+            p1 = form.save()
+            return redirect('propriedade:home')
+        else:
+            context = {
+                'form' :form,
+                'objeto': 'Propriedade',
+                'endereco': enderecoForm,
+            }
+            return render(request, 'propriedade/propriedade_form.html', context)
+    else:
+        form = PropriedadeForm(instance=propriedade)
+        enderecoForm = EnderecoForm( instance=propriedade.endereco)
+        context = {
+            'form': form,
+            'objeto': 'Propriedade',
+            'endereco':enderecoForm,
+        }
+
         return render(request, 'propriedade/propriedade_form.html', context)
 
 
