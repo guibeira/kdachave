@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 align-right">
                             <div class="panel-switch-btn">
-                                  <a href="{% url 'pessoacreate' %}" class="btn btn-primary">Nova</a>
+                                  <a href="{% url 'pessoa:create' %}" class="btn btn-primary">Nova</a>
                             </div>
                         </div>
                     </div>
@@ -64,10 +64,10 @@
                                       {{ pessoa.celular1 }}
                                   </td>
                                   <td>
-                                      <a href="{% url 'pessoaupdate' pessoa.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                                      <a href="{% url 'pessoa:update' pessoa.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
                                    </td>
                                    <td>
-                                      <a href="{% url 'pessoadelete' pessoa.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
+                                      <a href="{% url 'pessoa:delete' pessoa.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
                                    </td>
                               </tr>
                           {% endfor %}

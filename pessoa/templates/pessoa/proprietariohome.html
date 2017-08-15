@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 align-right">
                             <div class="panel-switch-btn">
-                                  <a href="{% url 'proprietariocreate' %}" class="btn btn-primary">Novo</a>
+                                  <a href="{% url 'proprietario:create' %}" class="btn btn-primary">Novo</a>
                             </div>
                         </div>
                     </div>
@@ -64,10 +64,10 @@
                                       {{ proprietario.celular1 }}
                                 </td>
                                 <td>
-                                    <a href="{% url 'proprietarioupdate' proprietario.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                                    <a href="{% url 'proprietario:update' proprietario.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
                                  </td>
                                  <td>
-                                    <a href="{% url 'propriedade:delete' proprietario.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
+                                    <a href="{% url 'proprietario:delete' proprietario.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
                                  </td>
                               </tr>
                           {% endfor %}

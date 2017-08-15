@@ -40,12 +40,12 @@ class ProprietatioUpdate(LoginRequiredMixin, UpdateView):
     model = Pessoa
     form_class = ProprietarioForm
     template_name = 'form.html'
-    success_url = reverse_lazy('proprietariohome')
+    success_url = reverse_lazy('proprietario:home')
 
 
 class DeleteProprietatio(LoginRequiredMixin, DeleteView):
     model = Pessoa
-    success_url = reverse_lazy('proprietariohome')
+    success_url = reverse_lazy('proprietario:home')
     template_name = 'confirmdelete.html'
 
 @login_required
@@ -57,7 +57,7 @@ def pessoaUpdate(request, pk):
         if form.is_valid() and userForm.is_valid():
             user = userForm.save()
             p1 = form.save()
-            return redirect('pessoahome')
+            return redirect('pessoa:home')
         else:
             return render(request, 'form.html', {'form': form})
     else:
@@ -74,7 +74,7 @@ def pessoaUpdate(request, pk):
 
 class DeletePessoa(LoginRequiredMixin, DeleteView):
     model = Pessoa
-    success_url = reverse_lazy('pessoahome')
+    success_url = reverse_lazy('pessoa:home')
     template_name = 'confirmdelete.html'
 
 @login_required
@@ -99,7 +99,7 @@ def pessoacreate(request):
             p1.user = user
             p1.save()
 
-            return redirect('pessoahome')
+            return redirect('pessoa:home')
         else:
             return render(request, 'form.html', {'form': form})
     else:
