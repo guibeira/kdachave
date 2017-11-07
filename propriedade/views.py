@@ -47,6 +47,9 @@ def create(request):
         return render(request, 'propriedade/propriedade_form.html', context)
 
 
+def detalhes(request, pk):
+    propriedade = get_object_or_404(Propriedade,pk=pk)
+    return render(request, 'propriedade/detail.html')
 
 def updatePropriedade(request, pk):
     propriedade = get_object_or_404(Propriedade,pk=pk)

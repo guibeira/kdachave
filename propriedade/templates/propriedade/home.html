@@ -52,6 +52,9 @@
                         <th>
 							Complemento
                         </th>
+                        <th>
+							Detalhes
+                        </th>
                          <th>
 							Editar
                         </th>
@@ -83,7 +86,10 @@
                         </td>
                         <td>
                             <a href="{% url 'propriedade:update' propriedade.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
-                         </td>
+                        </td>
+                        <td>
+                            <a href="{% url 'propriedade:update' propriedade.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                        </td>
                         <td>
                             <a href="{% url 'propriedade:delete' propriedade.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
                          </td>
