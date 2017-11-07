@@ -7,12 +7,12 @@ class ProprietarioForm(forms.ModelForm):
 
     class Meta:
         model = Pessoa
-        fields = ['nome','telefoneComercial', 'telefoneResidencial', 'celular1', 'celular2', 'endereco', 'numeroEndereco', ]
+        fields = ['nome','telefoneComercial', 'telefoneResidencial', 'celular1', 'celular2', 'numeroEndereco', ]
 
 class PessoaForm(forms.ModelForm):
     class Meta:
         model = Pessoa
-        fields = ['nome','telefoneComercial', 'telefoneResidencial', 'celular1', 'celular2', 'endereco', 'numeroEndereco', ]
+        fields = ['nome','telefoneComercial', 'telefoneResidencial', 'celular1', 'celular2', 'numeroEndereco', ]
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

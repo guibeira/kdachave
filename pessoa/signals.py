@@ -20,4 +20,5 @@ def model_post_save(sender, **kwargs):
     # print('no signal do pessoa')
     print(kwargs['instance'])
     pessoa = kwargs['instance']
-    pessoa.user.delete()
+    if not pessoa.proprietario:
+        pessoa.user.delete()
