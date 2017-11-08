@@ -5,6 +5,16 @@ from .models import Autorizacao
 from propriedade.models import Propriedade
 from .forms import AutorizacaoForm
 
+
+@login_required
+def get_autorizacao_by_propriedade(request, pk):
+    template_name = 'autorizacao/get_autorizacao_by_propriedade.html'
+    autorizacoes = Autorizacao.objects.filter(propriedade_id=pk)
+    context = {
+        'autorizacoes' : autorizacoes
+    }
+    return render(request, template_name, context)
+
 @login_required
 def create(request, pk):
     propriedade = get_object_or_404(Propriedade,pk=pk)
@@ -47,6 +57,7 @@ def update_autorizacao(request, pk):
         }
         return render(request, 'autorizacao/form.html', context)
 
+@login_required
 def delete_autorizacao(request,pk):
     autorizacao = get_object_or_404(Autorizacao,pk=pk)
     propriedade = autorizacao.propriedade

@@ -75,8 +75,7 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="panel-body">
-                                        <div class="panel-group" id="panel-538665">
-                                            
+                                        <div class="panel-group" id="panel-autorizacao">
                                             {% for autorizacao in propriedade.autorizacao_set.all %}
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
@@ -195,6 +194,18 @@
 {% block extrajs %}
 <script>
     $(document).ready(function(){
+
+        function refreshAutorizacoes(propriedadeId){
+            var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/getbypropriedade/"+propriedadeId+"/";
+            $.ajax({
+                type: "GET",
+                url: durl,
+                success: function(data){
+                    $('#panel-autorizacao').html(data);
+                },
+            });
+        }
+    
         $('.btn-new').on('click',function(){
           var tipo = $(this).attr('tipo');
           var propriedadeId = $(this).attr('propriedadeId');
@@ -219,6 +230,7 @@
                             url: durl,
                             data: $('form', $('.modal-body')).serialize(),
                             success: function(data){
+                                refreshAutorizacoes(propriedadeId)
                                 $('.modal').modal('hide');
                             },
                             error: function (data, xhr, ajaxOptions, thrownError) {

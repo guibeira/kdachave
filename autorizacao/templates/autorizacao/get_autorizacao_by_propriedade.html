@@ -1,0 +1,12 @@
+{% for autorizacao in autorizacoes %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
+    </div>
+    <div id="panel-element-{{autorizacao.pk}}" class="panel-collapse collapse">
+        <div class="panel-body">
+            {{autorizacao.descricao}}
+        </div>
+    </div>
+</div>
+{% endfor %}
