@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'propriedade/', include('propriedade.urls', namespace="propriedade")),
     url(r'proprietario/', include('pessoa.urls.proprietario', namespace="proprietario")),
     url(r'pessoa/', include('pessoa.urls.pessoa', namespace="pessoa")),
- 
+    url(r'autorizacao/', include('autorizacao.urls', namespace="autorizacao")),
+
 ]
