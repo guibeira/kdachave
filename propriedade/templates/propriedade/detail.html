@@ -222,7 +222,13 @@
 
                     $('.modal-body').html(html);
                     $('form', $('.modal-body')).attr('action', durl);
-
+                    $('#id_dataFim', $('.modal-body')).datetimepicker({
+                        format: 'd/MM/Y H:m',
+                    });
+                    $('#id_dataInicio', $('.modal-body')).datetimepicker({
+                        format: 'd/MM/Y H:m',
+                    });
+                
                     $('form', $('.modal-body')).submit(function(e){
                         e.preventDefault();
                         $.ajax({
