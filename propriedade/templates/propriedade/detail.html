@@ -7,61 +7,25 @@
                 <div class="header">
                     <div class="row clearfix">
                         <div class="col-xs-12 col-sm-6">
-                            <h2>Title black</h2>
+                            <h2>{{propriedade.nome}}</h2>
                         </div>
 
-                        <!-- <div class="col-xs-12 col-sm-6 align-right">
-                                <div class="panel-switch-btn">
-                                      <a href="{% url 'propriedade:create' %}" class="btn btn-primary">Nova</a>
-                                </div>
-                            </div> -->
+                        <div class="col-xs-12 col-sm-6 align-right">
+                            <div class="panel-switch-btn">
+                                    <a href="{% url 'propriedade:update' propriedade.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                            </div>
+                        </div>
                     </div>
-                    <!-- <ul class="header-dropdown m-r--5">
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">more_vert</i>
-                                </a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="javascript:void(0);">Action</a></li>
-                                    <li><a href="javascript:void(0);">Another action</a></li>
-                                    <li><a href="javascript:void(0);">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul> -->
                 </div>
                 <div class="body">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>
-                                    h3. Lorem ipsum dolor sit amet.
-                                </h3>
-                                <ul>
-                                    <li>
-                                        Lorem ipsum dolor sit amet
-                                    </li>
-                                    <li>
-                                        Consectetur adipiscing elit
-                                    </li>
-                                    <li>
-                                        Integer molestie lorem at massa
-                                    </li>
-                                    <li>
-                                        Facilisis in pretium nisl aliquet
-                                    </li>
-                                    <li>
-                                        Nulla volutpat aliquam velit
-                                    </li>
-                                    <li>
-                                        Faucibus porta lacus fringilla vel
-                                    </li>
-                                    <li>
-                                        Aenean sit amet erat nunc
-                                    </li>
-                                    <li>
-                                        Eget porttitor lorem
-                                    </li>
-                                </ul>
+                                <label>Tipo:</label> {{propriedade.tipo}}</br>
+                                <label>Endereço:</label> {{propriedade.endereco.logradouro}}, {{propriedade.numero}}</br>
+                                <label>Cidade:</label> {{propriedade.endereco.cidade}}</br>
+                                <label>Estado:</label> {{propriedade.endereco.estado}}</br>
+                                <label>Cep:</label> {{propriedade.endereco.cep}}
                             </div>
                         </div>
                         <div class="row">
@@ -77,22 +41,27 @@
                                     <div class="panel-body">
                                         <div class="panel-group" id="panel-autorizacao">
                                             {% for autorizacao in propriedade.autorizacao_set.all %}
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
-                                                </div>
-                                                <div id="panel-element-{{autorizacao.pk}}" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        {{autorizacao.descricao}}
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
+                                                        <!-- <div class="pull-right"> -->
+                                                            <a id="modal-511775" href="#modal-container-511775" tipo="autorizacao" propriedadeId="{{propriedade.pk}}" autorizacaoId="{{autorizacao.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">    <i class="material-icons">mode_edit</i> </a>
+                                                            <a href="#" onclick="deleteAutorizacao('{{autorizacao.pk}}','{{propriedade.pk}}');" class="btn btn-danger btn-delete-autorizacao">    <i class="material-icons">delete</i> </a>
+                                                        <!-- </div> -->
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div id="panel-element-{{autorizacao.pk}}" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <label>Descrição:</label> {{autorizacao.descricao}}</br>
+                                                            <label>Status:</label> {{autorizacao.status}}</br>
+                                                            <label>Data Início:</label> {{autorizacao.dataInicio}}</br>
+                                                            <label>Data Fim:</label> {{autorizacao.dataFim}}</br>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                             {% endfor %}
                                         </div>
                                     </div>
-                                    <!-- <div class="panel-footer">
-                                            Panel footer
-                                        </div> -->
                                 </div>
 
                             </div>
@@ -193,19 +162,38 @@
 
 {% block extrajs %}
 <script>
+    var csrftoken = $.cookie('csrftoken');
+    function deleteAutorizacao(autorizacaoId, propriedadeId){
+       
+        var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/delete/"+autorizacaoId+"/";
+        $.ajax({
+            type: "POST",
+            url: durl,
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function(data){
+                refreshAutorizacoes(propriedadeId)
+            },
+            error: function (data, xhr, ajaxOptions, thrownError) {
+                alert('erro ao deletar');
+            }
+        });
+    }
+
+    function refreshAutorizacoes(propriedadeId){
+        var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/getbypropriedade/"+propriedadeId+"/";
+        $.ajax({
+            type: "GET",
+            url: durl,
+            success: function(data){
+                $('#panel-autorizacao').html(data);
+            },
+        });
+    }
+    
     $(document).ready(function(){
 
-        function refreshAutorizacoes(propriedadeId){
-            var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/getbypropriedade/"+propriedadeId+"/";
-            $.ajax({
-                type: "GET",
-                url: durl,
-                success: function(data){
-                    $('#panel-autorizacao').html(data);
-                },
-            });
-        }
-    
         $('.btn-new').on('click',function(){
           var tipo = $(this).attr('tipo');
           var propriedadeId = $(this).attr('propriedadeId');
@@ -245,6 +233,48 @@
 
           }
         });
+
+        $('.btn-edit').on('click',function(){
+            var tipo = $(this).attr('tipo');
+            var autorizacaoId = $(this).attr('autorizacaoId');
+            var propriedadeId = $(this).attr('propriedadeId');
+
+            if(tipo === "autorizacao"){
+                //chama ajax de autorização
+                var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/update/"+autorizacaoId+"/";
+                $.ajax({
+                    type: "GET",
+                    url: durl,
+                    success: function(data){
+                        html = $.parseHTML(data);
+                        $('.modal-title').html("Editar Autorização");
+
+                        $('.modal-body').html(html);
+                        $('form', $('.modal-body')).attr('action', durl);
+
+                        $('form', $('.modal-body')).submit(function(e){
+                            e.preventDefault();
+                            $.ajax({
+                                type: "POST",
+                                url: durl,
+                                data: $('form', $('.modal-body')).serialize(),
+                                success: function(data){
+                                    refreshAutorizacoes(propriedadeId)
+                                    $('.modal').modal('hide');
+                                },
+                                error: function (data, xhr, ajaxOptions, thrownError) {
+                                    $('.modal-body').html(data.responseText);
+                                }
+                            });
+                        });
+                    }
+                });
+            }else{
+              //chama ajax de Molho
+
+            }
+        });
+
     });
 </script>
 {% endblock extrajs %}

@@ -1,12 +1,20 @@
 {% for autorizacao in autorizacoes %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
-    </div>
-    <div id="panel-element-{{autorizacao.pk}}" class="panel-collapse collapse">
-        <div class="panel-body">
-            {{autorizacao.descricao}}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
+            <!-- <div class="pull-right"> -->
+                <a id="modal-511775" href="#modal-container-511775" tipo="autorizacao" propriedadeId="{{autorizacao.propriedade.pk}}" autorizacaoId="{{autorizacao.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">    <i class="material-icons">mode_edit</i> </a>
+                <a href="#" onclick="deleteAutorizacao('{{autorizacao.pk}}','{{autorizacao.propriedade.pk}}');" class="btn btn-danger btn-delete-autorizacao">    <i class="material-icons">delete</i> </a>
+            <!-- </div> -->
+            <div class="clearfix"></div>
+        </div>
+        <div id="panel-element-{{autorizacao.pk}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <label>Descrição:</label> {{autorizacao.descricao}}</br>
+                <label>Status:</label> {{autorizacao.status}}</br>
+                <label>Data Início:</label> {{autorizacao.dataInicio}}</br>
+                <label>Data Fim:</label> {{autorizacao.dataFim}}</br>
+            </div>
         </div>
     </div>
-</div>
 {% endfor %}

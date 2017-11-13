@@ -62,4 +62,4 @@ def delete_autorizacao(request,pk):
     autorizacao = get_object_or_404(Autorizacao,pk=pk)
     propriedade = autorizacao.propriedade
     autorizacao.delete()
-    return redirect('propriedade:detalhe', propriedade.pk)
+    return HttpResponse(200);

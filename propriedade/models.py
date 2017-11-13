@@ -11,7 +11,7 @@ class Propriedade(models.Model):
     proprietario = models.ForeignKey('pessoa.Pessoa')
 
     def __str__(self):
-        return '{} {}'.format(self.proprietario, self.numero)
+        return self.nome
     
 
 class TipoPropriedade(models.Model):
