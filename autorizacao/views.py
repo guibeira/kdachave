@@ -43,7 +43,8 @@ def update_autorizacao(request, pk):
     if request.method == "POST":
         form = AutorizacaoForm(request.POST, instance=autorizacao)
         if form.is_valid():
-            autorizacao.save()
+            print("isvalid")
+            form.save()
             return HttpResponse(200);
         else:
             context = {
