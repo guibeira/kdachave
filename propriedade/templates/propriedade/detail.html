@@ -43,8 +43,8 @@
                                             {% for autorizacao in propriedade.autorizacao_set.all %}
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        <a tipo="autorizacao" propriedadeId="{{propriedade.pk}}" autorizacaoId="{{autorizacao.pk}}" role="button" class="btn btn-info btn-edit pull-right" data-toggle="modal">    <i class="material-icons">mode_edit</i> </a>
                                                         <a href="#" onclick="deleteAutorizacao('{{autorizacao.pk}}','{{propriedade.pk}}');" class="btn btn-danger btn-delete-autorizacao pull-right">    <i class="material-icons">delete</i> </a>
+                                                        <a tipo="autorizacao" propriedadeId="{{propriedade.pk}}" autorizacaoId="{{autorizacao.pk}}" role="button" class="btn btn-info btn-edit pull-right" data-toggle="modal">    <i class="material-icons">mode_edit</i> </a>
                                                         <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -150,11 +150,8 @@
             </div>
             <div class="modal-body">
             </div>
-
         </div>
-
     </div>
-
 </div>
 {% endblock %}
 
@@ -181,6 +178,17 @@
 
     function refreshAutorizacoes(propriedadeId){
         var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/getbypropriedade/"+propriedadeId+"/";
+        $.ajax({
+            type: "GET",
+            url: durl,
+            success: function(data){
+                $('#panel-autorizacao').html(data);
+            },
+        });
+    }
+
+    function refreshMolhos(propriedadeId){
+        var durl = window.location.protocol+'//'+window.location.host+"/autorizacao/getmolhobypropriedade/"+propriedadeId+"/";
         $.ajax({
             type: "GET",
             url: durl,
@@ -234,7 +242,34 @@
             });
           }else{
               //chama ajax de Molho
+              var durl = window.location.protocol+'//'+window.location.host+"/molho/create/"+propriedadeId+"/";
+              $.ajax({
+                type: "GET",
+                url: durl,
+                success: function(data){
+                    html = $.parseHTML(data);
+                    $('.modal-title').html("Novo Molho");
 
+                    $('.modal-body').html(html);
+                    $('form', $('.modal-body')).attr('action', durl);
+                
+                    $('form', $('.modal-body')).submit(function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            type: "POST",
+                            url: durl,
+                            data: $('form', $('.modal-body')).serialize(),
+                            success: function(data){
+                                refreshMolhos(propriedadeId)
+                                $('.modal').modal('hide');
+                            },
+                            error: function (data, xhr, ajaxOptions, thrownError) {
+                                $('.modal-body').html(data.responseText);
+                            }
+                        });
+                    });
+                }
+            });
           }
         });
         $(document).on('click', '.btn-edit', function(){
