@@ -43,11 +43,9 @@
                                             {% for autorizacao in propriedade.autorizacao_set.all %}
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
+                                                        <a tipo="autorizacao" propriedadeId="{{propriedade.pk}}" autorizacaoId="{{autorizacao.pk}}" role="button" class="btn btn-info btn-edit pull-right" data-toggle="modal">    <i class="material-icons">mode_edit</i> </a>
+                                                        <a href="#" onclick="deleteAutorizacao('{{autorizacao.pk}}','{{propriedade.pk}}');" class="btn btn-danger btn-delete-autorizacao pull-right">    <i class="material-icons">delete</i> </a>
                                                         <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-{{autorizacao.pk}}" href="#panel-element-{{autorizacao.pk}}">{{autorizacao.autorizada}}  {{autorizacao.dataFim|date:'d/m/Y'}}</a>
-                                                        <!-- <div class="pull-right"> -->
-                                                            <a id="modal-511775" href="#modal-container-511775" tipo="autorizacao" propriedadeId="{{propriedade.pk}}" autorizacaoId="{{autorizacao.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">    <i class="material-icons">mode_edit</i> </a>
-                                                            <a href="#" onclick="deleteAutorizacao('{{autorizacao.pk}}','{{propriedade.pk}}');" class="btn btn-danger btn-delete-autorizacao">    <i class="material-icons">delete</i> </a>
-                                                        <!-- </div> -->
                                                         <div class="clearfix"></div>
                                                     </div>
                                                     <div id="panel-element-{{autorizacao.pk}}" class="panel-collapse collapse">
@@ -239,8 +237,8 @@
 
           }
         });
-
-        $('.btn-edit').on('click',function(){
+        $(document).on('click', '.btn-edit', function(){
+        // $('.btn-edit').on('click',function(){
             var tipo = $(this).attr('tipo');
             var autorizacaoId = $(this).attr('autorizacaoId');
             var propriedadeId = $(this).attr('propriedadeId');
@@ -254,10 +252,9 @@
                     success: function(data){
                         html = $.parseHTML(data);
                         $('.modal-title').html("Editar Autorização");
-
                         $('.modal-body').html(html);
                         $('form', $('.modal-body')).attr('action', durl);
-
+                        $('.modal').modal('show');
                         $('form', $('.modal-body')).submit(function(e){
                             e.preventDefault();
                             $.ajax({
