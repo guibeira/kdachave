@@ -153,6 +153,145 @@
         </div>
     </div>
 </div>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                 <a id="modal-361229" href="#modal-container-361229" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+                
+                <div class="modal fade" id="modal-container-361229" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                 
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    Molho X
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <div class="clearfix">
+                                                                <a id="modal-511775" href="#modal-container-511775" propriedadeId="{{propriedade.pk}}" tipo="molho" role="button" class="btn btn-primary pull-right btn-new" data-toggle="modal">Novo</a>
+                                                                <h3 class="panel-title">
+                                                                    Chaves
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                                <table class="table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    #
+                                                                                </th>
+                                                                                <th>
+                                                                                    Product
+                                                                                </th>
+                                                                                <th>
+                                                                                    Payment Taken
+                                                                                </th>
+                                                                                <th>
+                                                                                    Status
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    1
+                                                                                </td>
+                                                                                <td>
+                                                                                    TB - Monthly
+                                                                                </td>
+                                                                                <td>
+                                                                                    01/04/2012
+                                                                                </td>
+                                                                                <td>
+                                                                                    Default
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                        </div>
+                                                        <div class="panel-footer">
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                    <div class="clearfix">
+                                                                        <a id="modal-511775" href="#modal-container-511775" propriedadeId="{{propriedade.pk}}" tipo="molho" role="button" class="btn btn-primary pull-right btn-new" data-toggle="modal">Novo</a>
+                                                                        <h3 class="panel-title">
+                                                                            Controles
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                        <div class="panel-body">
+                                                                <table class="table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>
+                                                                                    #
+                                                                                </th>
+                                                                                <th>
+                                                                                    Product
+                                                                                </th>
+                                                                                <th>
+                                                                                    Payment Taken
+                                                                                </th>
+                                                                                <th>
+                                                                                    Status
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    1
+                                                                                </td>
+                                                                                <td>
+                                                                                    TB - Monthly
+                                                                                </td>
+                                                                                <td>
+                                                                                    01/04/2012
+                                                                                </td>
+                                                                                <td>
+                                                                                    Default
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                        </div>
+                                                        <div class="panel-footer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                 
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button> 
+                                <button type="button" class="btn btn-primary">
+                                    Save changes
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block extrajs %}
@@ -273,8 +412,8 @@
           }
         });
         $(document).on('click', '.btn-edit', function(){
-        // $('.btn-edit').on('click',function(){
             var tipo = $(this).attr('tipo');
+                // $('.btn-edit').on('click',function(){
             var autorizacaoId = $(this).attr('autorizacaoId');
             var propriedadeId = $(this).attr('propriedadeId');
 
