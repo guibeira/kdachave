@@ -1,9 +1,5 @@
 .sqlite3
 *pyc
 media/propriedades/*
-propriedade/migrations/*
-molho/migrations/*
-pessoa/migrations/*
-endereco/migrations/*
 .env
 db.sqlite3
