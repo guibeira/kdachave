@@ -17,7 +17,7 @@ def get_molho_by_propriedade(request, pk):
 
 @login_required
 def create(request, pk):
-    print('create')
+    print('molho create')
     propriedade = get_object_or_404(Propriedade,pk=pk)
     if request.method == "POST":
         form = MolhoForm(request.POST)

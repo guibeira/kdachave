@@ -6,4 +6,4 @@ class MolhoForm(forms.ModelForm):
     
     class Meta:
         model = Molho
-        fields = [ 'descricao', ]
+        fields = [ 'descricao', 'chaves', 'controles',]
