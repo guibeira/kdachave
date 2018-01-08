@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PropriedadeForm
 from .models import Propriedade
+from molho.models import Molho
 from django.core.urlresolvers import reverse_lazy
 from endereco.forms import EnderecoForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -49,7 +50,12 @@ def create(request):
 
 def detalhes(request, pk):
     propriedade = get_object_or_404(Propriedade,pk=pk)
-    return render(request, 'propriedade/detail.html', {"propriedade":propriedade})
+    molhos = Molho.objects.filter(propriedade_id=propriedade.pk)
+    context = {
+        "propriedade":propriedade,
+        "molhos": molhos,
+    }
+    return render(request, 'propriedade/detail.html', context)
 
 def updatePropriedade(request, pk):
     propriedade = get_object_or_404(Propriedade,pk=pk)

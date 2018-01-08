@@ -63,4 +63,4 @@ def delete_molho(request,pk):
     molho = get_object_or_404(Molho,pk=pk)
     propriedade = molho.propriedade
     molho.delete()
-    return HttpResponse(200);
+    return redirect('propriedade:detalhe', pk=propriedade.pk)

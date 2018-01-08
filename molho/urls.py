@@ -7,4 +7,3 @@ urlpatterns = [
     url(r'getmolhobypropriedade/(?P<pk>[0-9]+)/$', views.get_molho_by_propriedade, name='getmolhobypropriedade'),
     url(r'update/(?P<pk>[0-9]+)/$', views.update_molho, name='update'),
 ]
-
