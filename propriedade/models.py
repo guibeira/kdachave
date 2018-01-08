@@ -8,7 +8,7 @@ class Propriedade(models.Model):
     tipo = models.ForeignKey('TipoPropriedade')
     endereco = models.ForeignKey('endereco.Endereco', null=True)
     complemento = models.CharField(max_length=100)
-    proprietario = models.ForeignKey('pessoa.Pessoa')
+    pessoa = models.ForeignKey('pessoa.Pessoa')
 
     def __str__(self):
         return self.nome

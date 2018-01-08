@@ -12,8 +12,6 @@ class Pessoa(models.Model):
     celular2 = models.CharField('Celular 2',max_length=100)
     endereco = models.ForeignKey('endereco.Endereco')
     numeroEndereco = models.PositiveIntegerField('Numero do Endereço');
-    proprietario = models.BooleanField(default=False)
-
 
     def __str__(self):
         return self.nome
