@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'endereco',
     'propriedade',
     'molho',
-    'autorizacao'
 ]
 
 MIDDLEWARE = [
