@@ -17,7 +17,7 @@ def get_molho_by_propriedade(request, pk):
 
 @login_required
 def create(request, pk):
-    print('create')
+    print('molho create')
     propriedade = get_object_or_404(Propriedade,pk=pk)
     if request.method == "POST":
         form = MolhoForm(request.POST)
@@ -63,4 +63,4 @@ def delete_molho(request,pk):
     molho = get_object_or_404(Molho,pk=pk)
     propriedade = molho.propriedade
     molho.delete()
-    return HttpResponse(200);
+    return redirect('propriedade:detalhe', pk=propriedade.pk)
