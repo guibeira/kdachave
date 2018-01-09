@@ -64,7 +64,9 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="{% url 'molho:delete' molho.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
+                                                            <a href="{% url 'molho:delete' molho.pk %}" class="btn btn-danger">
+                                                                <i class="material-icons">delete</i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -107,6 +109,10 @@
 <script>
     var csrftoken = $.cookie('csrftoken');
     $(document).ready(function(){
+
+        $(document).ready(function(){
+            $('.table').DataTable();
+        });
 
         $('.btn-new').on('click',function(){
           var propriedadeId = $(this).attr('propriedadeId');
@@ -178,14 +184,6 @@
             });
           
         });
-
-
-        // $(document).on('click', '.btn-edit', function(){
-        //     var tipo = $(this).attr('tipo');
-        //     var autorizacaoId = $(this).attr('autorizacaoId');
-        //     var propriedadeId = $(this).attr('propriedadeId');
-
-        // });
 
     });
 </script>
