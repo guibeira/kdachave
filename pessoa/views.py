@@ -81,10 +81,6 @@ def pessoacreate(request):
 
             return redirect('pessoa:home')
         else:
-            print('userForm')
-            print(userForm.errors)
-            print('enderecoForms')
-            print(enderecoForm.errors)
             return render(request, 'form.html', context)
     else:
         form = PessoaForm()

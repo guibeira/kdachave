@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'propriedade/', include('propriedade.urls', namespace="propriedade")),
     url(r'pessoa/', include('pessoa.urls.pessoa', namespace="pessoa")),
     url(r'molho/', include('molho.urls', namespace="molho")),
+    url(r'registro/', include('registro.urls', namespace="registro")),
 ]
