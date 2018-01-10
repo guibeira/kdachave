@@ -10,8 +10,14 @@ class Pessoa(models.Model):
     telefoneResidencial = models.CharField('Telefone Residencial', max_length=100)
     celular1 = models.CharField('Celular 1', max_length=100)
     celular2 = models.CharField('Celular 2',max_length=100)
-    endereco = models.ForeignKey('endereco.Endereco')
-    numeroEndereco = models.PositiveIntegerField('Numero do Endereço');
+
+    cep = models.CharField("CEP",  max_length=9)
+    logradouro = models.CharField("Logradouro", max_length=150)
+    numero = models.PositiveIntegerField('Número');
+    complemento = models.CharField("Complemento", max_length=150)
+    bairro = models.CharField("Bairro", max_length=30)
+    cidade = models.CharField("Cidade", max_length=30)
+    estado = models.CharField("Estado", max_length=2)
 
     def __str__(self):
         return self.nome
