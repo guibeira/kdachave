@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     #internall apps
     'core',
     'pessoa',
-    'endereco',
     'propriedade',
     'molho',
     'registro',
