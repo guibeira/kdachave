@@ -3,9 +3,7 @@
 {% load check_type_field %}
 {% block content %}
 <div class="container-fluid">
-    <!-- <div class="block-header">
-        <h2>Adicionar Propriedade</h2>
-    </div> -->
+    
     <div class="row ">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="card">
@@ -69,28 +67,6 @@
                              </div>
                        {% endfor %}
                      {% endif %}
-                    {% for field in enderecoForm %}
-                      <label for="password">{{field.label}}</label>
-                      <div class="form-group">
-                          <div class="form-line">
-                              {{ field|attr:"class:form-control" }}
-                          </div>
-                      </div>
-                     {% endfor %}
-                     {% if enderecoForm.errors %}
-                       {% for field in enderecoForm %}
-                             {% for error in field.errors %}
-                                 <div class="alert alert-danger">
-                                     <strong>{{ error|escape }}</strong>
-                                 </div>
-                             {% endfor %}
-                         {% endfor %}
-                         {% for error in enderecoForm.non_field_errors %}
-                             <div class="alert alert-danger">
-                                 <strong>{{ error|escape }}</strong>
-                             </div>
-                       {% endfor %}
-                     {% endif %}
                     <br>
                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">Salvar</button>
                 </form>
@@ -105,7 +81,68 @@
 
 {% block extrajs %}
 <script>
+
+    function limpa_formulário_cep() {
+        // Limpa valores do formulário de cep.
+        $("#id_cep").val("");
+        $("#id_logradouro").val("");
+        $("#id_cidade").val("");
+        $("#id_estado").val("");
+        $("#id_bairro").val("");
+    }
+
     $(document).ready(function(){
+
+        //Quando o campo cep perde o foco.
+        $("#id_cep").blur(function() {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $("#id_cep").val("...");
+                    $("#id_logradouro").val("...");
+                    $("#id_cidade").val("...");
+                    $("#id_estado").val("...");
+                    $("#id_bairro").val("...");
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#id_cep").val(dados.cep);
+                            $("#id_logradouro").val(dados.logradouro);
+                            $("#id_cidade").val(dados.localidade);
+                            $("#id_estado").val(dados.uf);
+                            $("#id_bairro").val(dados.bairro);
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+                        }
+                    });
+                } else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        });
+
         $('.table').DataTable();
         $('select').selectpicker({
             style: 'btn-info',
