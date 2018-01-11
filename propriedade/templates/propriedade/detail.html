@@ -9,7 +9,6 @@
                         <div class="col-xs-12 col-sm-6">
                             <h2>{{propriedade.nome}}</h2>
                         </div>
-
                         <div class="col-xs-12 col-sm-6 align-right">
                             <div class="panel-switch-btn">
                                     <a href="{% url 'propriedade:update' propriedade.pk %}" class="btn btn-info">    
@@ -23,10 +22,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Tipo:</label> {{propriedade.get_tipoPropriedade_display}}</br>
-                                <label>Endereço:</label> {{propriedade.endereco.logradouro}}, {{propriedade.numero}}</br>
-                                <label>Cidade:</label> {{propriedade.endereco.cidade}}</br>
-                                <label>Estado:</label> {{propriedade.endereco.estado}}</br>
-                                <label>Cep:</label> {{propriedade.endereco.cep}}
+                                <label>Endereço:</label> {{propriedade.logradouro}}, {{propriedade.numero}}</br>
+                                <label>Bairro:</label> {{propriedade.bairro}}</br>
+                                <label>Cidade:</label> {{propriedade.cidade}}</br>
+                                <label>Estado:</label> {{propriedade.estado}}</br>
+                                <label>Cep:</label> {{propriedade.cep}}
                             </div>
                         </div>
                         
@@ -43,7 +43,6 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <!-- <th> # </th> -->
                                                     <th> Descrição </th>
                                                     <th> Quantidade de Chaves </th>
                                                     <th> Quantidade de Controles </th>
@@ -54,7 +53,6 @@
                                             <tbody>
                                                 {% for molho in molhos %}
                                                     <tr>
-                                                        <!-- <td> 1 </td> -->
                                                         <td> {{ molho.descricao }} </td>
                                                         <td> {{ molho.chaves }} </td>
                                                         <td> {{ molho.controles }} </td>
@@ -76,11 +74,9 @@
                                     <div class="panel-footer">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -104,7 +100,6 @@
     </div>
 </div>
 {% endblock %}
-
 {% block extrajs %}
 <script>
     var csrftoken = $.cookie('csrftoken');
@@ -116,7 +111,6 @@
 
         $('.btn-new').on('click',function(){
           var propriedadeId = $(this).attr('propriedadeId');
-
           var durl = window.location.protocol+'//'+window.location.host+"/molho/create/"+propriedadeId+"/";
           $.ajax({
                 type: "GET",
@@ -146,7 +140,6 @@
                     });
                 }
             });
-          
         });
 
         $('.btn-edit').on('click',function(){
@@ -182,9 +175,7 @@
                     });
                 }
             });
-          
         });
-
     });
 </script>
 {% endblock extrajs %}
