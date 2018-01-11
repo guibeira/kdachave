@@ -4,7 +4,10 @@ from django.http import HttpResponse
 from .models import Molho
 from propriedade.models import Propriedade
 from .forms import MolhoForm
-
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def get_molho_by_propriedade(request, pk):
@@ -57,9 +60,13 @@ def update_molho(request, pk):
         }
         return render(request, 'molho/form.html', context)
 
-@login_required
-def delete_molho(request,pk):
-    molho = get_object_or_404(Molho,pk=pk)
-    propriedade = molho.propriedade
-    molho.delete()
-    return redirect('propriedade:detalhe', pk=propriedade.pk)
+class DeleteMolho(LoginRequiredMixin, DeleteView):
+    model = Molho
+    success_url = reverse_lazy('propriedade:home')
+    template_name = 'confirmdelete.html'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        propriedade = self.object.propriedade
+        self.object.delete()
+        return redirect('propriedade:detalhe', pk=propriedade.pk )

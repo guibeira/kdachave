@@ -7,8 +7,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
-
 @login_required
 def home(request):
     propriedades = Propriedade.objects.all()
