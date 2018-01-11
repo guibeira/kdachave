@@ -45,8 +45,7 @@ def update(request, pk):
         }
         return render(request, 'registro/registro_form.html', context)	
 
-@login_required
-def delete(request,pk):
-	registro = get_object_or_404(Registro,pk=pk)
-	registro.delete()
-	return redirect('home')
+class DeleteRegistro(LoginRequiredMixin, DeleteView):
+	model = Registro
+	success_url = reverse_lazy('home')
+	template_name = 'confirmdelete.html'
