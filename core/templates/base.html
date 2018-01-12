@@ -316,10 +316,18 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'pessoa:home' %}">
+                        <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">people</i>
                             <span>Pessoas</span>
                         </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="{% url 'pessoa:home' %}">Pessoas</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'pessoa:listUsers' %}">Usuários</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="{% url 'propriedade:home' %}">

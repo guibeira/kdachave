@@ -2,12 +2,12 @@ from django import forms
 from .models import Pessoa
 from django.contrib.auth.models import User
 
-
 class PessoaForm(forms.ModelForm):
     class Meta:
         model = Pessoa
         fields = [
                     'nome',
+                    'user',
                     'telefoneComercial',
                     'telefoneResidencial',
                     'celular1',
