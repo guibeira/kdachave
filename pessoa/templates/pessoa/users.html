@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+
+    <div class="row ">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="header">
+                    <div class="row clearfix">
+                        <div class="col-xs-12 col-sm-6">
+                            <h2>Usuários</h2>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 align-right">
+                            <div class="panel-switch-btn">
+                                  <a href="{% url 'pessoa:createUser' %}" class="btn btn-primary">Novo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="javascript:void(0);">Action</a></li>
+                                <li><a href="javascript:void(0);">Another action</a></li>
+                                <li><a href="javascript:void(0);">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <table class="table">
+          				<thead>
+          					<tr>
+                                <th>Nome do Usuário</th>
+                                <th>Trocar Senha</th>
+                                <th>Editar</th>
+                                <th>Deletar</th>
+          					</tr>
+          				</thead>
+          				<tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user }}</td>
+                                    <td>
+                                        <a href="{% url 'pessoa:password_change'%}" class="btn btn-warning">    <i class="material-icons">lock_open</i> </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'pessoa:updateUser' user.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'pessoa:deleteUser' user.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+          				</tbody>
+      			    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+<script>
+    $(document).ready(function(){
+        $('.table').DataTable();
+    });
+</script>
+{% endblock extrajs %}

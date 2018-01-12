@@ -4,36 +4,32 @@ from django.http import HttpResponse
 from .forms import PessoaForm, UserForm, UserWithoutPasswordForm
 from pessoa.models import Pessoa
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-# Create your views here.
+from django.contrib.auth.models import User
 
 @login_required
 def pessoaUpdate(request, pk):
     pessoa = get_object_or_404(Pessoa,pk=pk)
     if request.method == 'POST':
         form = PessoaForm(request.POST, instance=pessoa)
-        userForm = UserWithoutPasswordForm(request.POST, instance=pessoa.user)
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
-        if form.is_valid() and userForm.is_valid():
-            user = userForm.save()
+        if form.is_valid():
             p1 = form.save()
             return redirect('pessoa:home')
         else:
             return render(request, 'form.html', context)
     else:
         form = PessoaForm(instance=pessoa)
-        userForm = UserWithoutPasswordForm(instance=pessoa.user)
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
-
         return render(request, 'form.html', context)
 
 
@@ -54,29 +50,94 @@ def pessoahome(request):
 def pessoacreate(request):
     if request.method == 'POST':
         form = PessoaForm(request.POST)
-        userForm = UserForm(request.POST)
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
-        if form.is_valid() and userForm.is_valid():
-            password = userForm.cleaned_data['password']
-            user = userForm.save()
+        if form.is_valid():
             p1 = form.save()
-            user.set_password(password)
-            user.save()
-
             return redirect('pessoa:home')
         else:
             return render(request, 'form.html', context)
     else:
         form = PessoaForm()
-        userForm = UserForm()
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
-
         return render(request, 'form.html', context)
+
+@login_required
+def listUsers(request):
+    users = User.objects.all()
+    context = {
+        'users':users,
+    }
+    return render(request, 'pessoa/users.html', context)
+
+@login_required
+def createUser(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        context = {
+            'form': form,
+            'objeto': 'User',
+        }
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            user = form.save()
+            user.set_password(password)
+            user.save()
+            return redirect('pessoa:listUsers')
+        else:
+            return render(request, 'form.html', context)
+    else:
+        form = UserForm()
+        context = {
+            'form': form,
+            'objeto': 'User',
+        }
+        return render(request, 'form.html', context)
+
+@login_required
+def updateUser(request,pk):
+    usuario = get_object_or_404(User,pk=pk)
+    if request.method == 'POST':
+        form = UserWithoutPasswordForm(request.POST, instance=usuario)
+        context = {
+            'form': form,
+            'objeto': 'User',
+        }
+        if form.is_valid():
+            user = form.save()
+            return redirect('pessoa:listUsers')
+        else:
+            return render(request, 'form.html', context)
+    else:
+        form = UserWithoutPasswordForm(instance=usuario)
+        context = {
+            'form': form,
+            'objeto': 'User',
+        }
+        return render(request, 'form.html', context)
+
+class DeleteUser(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy('pessoa:listUsers')
+    template_name = 'confirmdelete.html'
+
+@login_required
+def change_password(request):
+    print('RESET PASSWORD')
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('pessoa:listUsers')
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form': form
+    }
+    return render(request, "pessoa/reset-password.html", context)
