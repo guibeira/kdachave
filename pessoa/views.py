@@ -15,25 +15,20 @@ def pessoaUpdate(request, pk):
     pessoa = get_object_or_404(Pessoa,pk=pk)
     if request.method == 'POST':
         form = PessoaForm(request.POST, instance=pessoa)
-        userForm = UserWithoutPasswordForm(request.POST, instance=pessoa.user)
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
-        if form.is_valid() and userForm.is_valid():
-            user = userForm.save()
+        if form.is_valid():
             p1 = form.save()
             return redirect('pessoa:home')
         else:
             return render(request, 'form.html', context)
     else:
         form = PessoaForm(instance=pessoa)
-        userForm = UserWithoutPasswordForm(instance=pessoa.user)
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
         return render(request, 'form.html', context)
 
@@ -55,29 +50,20 @@ def pessoahome(request):
 def pessoacreate(request):
     if request.method == 'POST':
         form = PessoaForm(request.POST)
-        userForm = UserForm(request.POST)
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
-        if form.is_valid() and userForm.is_valid():
-            password = userForm.cleaned_data['password']
-            user = userForm.save()
+        if form.is_valid():
             p1 = form.save()
-            user.set_password(password)
-            user.save()
-
             return redirect('pessoa:home')
         else:
             return render(request, 'form.html', context)
     else:
         form = PessoaForm()
-        userForm = UserForm()
         context = {
             'form': form,
             'objeto': 'Pessoa',
-            'userForm':userForm,
         }
         return render(request, 'form.html', context)
 
