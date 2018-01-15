@@ -6,6 +6,16 @@ class Molho(models.Model):
 	chaves = models.IntegerField('Quantidade de Chaves')
 	controles = models.IntegerField('Quantidade de Controle')
 	propriedade = models.ForeignKey('propriedade.Propriedade')
-
+	STATUS =(
+	            (0, 'Em Uso'),
+	            (1, 'Devolvido'),
+	            (2, 'Alerta'),
+	            (3, 'Perdido'),
+            )
+	status = models.IntegerField("Status do Molho",
+                                    choices=STATUS,
+                                    blank=True,
+                                    null=True,
+                                )
 	def __str__(self):
 		return self.descricao
