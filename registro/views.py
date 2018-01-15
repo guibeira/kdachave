@@ -11,7 +11,10 @@ def create(request):
 	if request.method == "POST":
 		form = RegistroForm(request.POST)
 		if form.is_valid():
-			form.save()
+			registro = form.save()
+			for molho in registro.molhos.all():
+				molho.status = 0 # em uso
+				molho.save()
 			return redirect('home')
 		else:
 			context = {
@@ -27,23 +30,23 @@ def create(request):
 
 @login_required
 def update(request, pk):
-    registro = get_object_or_404(Registro,pk=pk)
-    if request.method == "POST":
-        form = RegistroForm(request.POST, instance=registro)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-        else:
-            context = {
-                'form': form ,
-            }
-            return render(request, 'registro/registro_form.html', context)
-    else:
-        form = RegistroForm(instance=registro)
-        context = {
-            'form': form,
-        }
-        return render(request, 'registro/registro_form.html', context)	
+	registro = get_object_or_404(Registro,pk=pk)
+	if request.method == "POST":
+		form = RegistroForm(request.POST, instance=registro)
+		if form.is_valid() and formMolho.is_valid():
+			registro = form.save()
+			return redirect('home')
+		else:
+			context = {
+				'form': form ,
+			}
+			return render(request, 'registro/registro_form.html', context)
+	else:
+		form = RegistroForm(instance=registro)
+		context = {
+			'form': form,
+		}
+		return render(request, 'registro/registro_form.html', context)	
 
 class DeleteRegistro(LoginRequiredMixin, DeleteView):
 	model = Registro

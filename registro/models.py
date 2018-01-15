@@ -1,4 +1,5 @@
 from django.db import models
+from molho.models import Molho
 
 class Registro(models.Model):
 	dataEntrega = models.DateTimeField("Data Entrega")
