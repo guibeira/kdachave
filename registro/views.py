@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistroForm
 from .models import Registro
+from propriedade.models import Propriedade
+from molho.models import Molho
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
@@ -46,9 +48,18 @@ def update(request, pk):
 		context = {
 			'form': form,
 		}
-		return render(request, 'registro/registro_form.html', context)	
+		return render(request, 'registro/registro_form.html', context)
 
 class DeleteRegistro(LoginRequiredMixin, DeleteView):
 	model = Registro
 	success_url = reverse_lazy('home')
 	template_name = 'confirmdelete.html'
+
+@login_required
+def getmolhos(request, pk):
+	propriedade = get_object_or_404(Propriedade,pk=pk)
+	molhos = Molho.objects.filter(propriedade=propriedade).exclude(status__in=(0,2,3));
+	context = {
+		"molhos":molhos,
+	}
+	return render(request, 'registro/molhosToSelect.html', context)

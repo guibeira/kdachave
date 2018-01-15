@@ -91,90 +91,109 @@
 {% endblock content %}
 {% block extrajs %}
 <script>
+    var csrftoken = $.cookie('csrftoken');
+    function onChangePropriedade(){
+        $('#id_propriedade').on('change',function(){
+            var idPropriedade = $(this).val();
+            var durl = window.location.protocol+'//'+window.location.host+"/registro/getmolhos/"+idPropriedade+"/";
+            $.ajax({
+                type: "POST",
+                url: durl,
+                beforeSend: function(xhr, settings) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function(data){
+                    $('#id_molhos').html(data);
+                    $('#id_molhos').selectpicker("refresh");
+                }
+            });
+        });
+    }
 
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    $('.table').DataTable();
+        $('.table').DataTable();
 
-    $('.datetimepicker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss'
-    });
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss'
+        });
 
-    $('.btn-new').on('click',function(){
-        var durl = window.location.protocol+'//'+window.location.host+"/registro/create";
-         $.ajax({
-            type: "GET",
-            url: durl,
-            success: function(data){
-                html = $.parseHTML(data);
-                $('.modal-title').html("Novo Registro");
+        $('.btn-new').on('click',function(){
+            var durl = window.location.protocol+'//'+window.location.host+"/registro/create";
+             $.ajax({
+                type: "GET",
+                url: durl,
+                success: function(data){
+                    html = $.parseHTML(data);
+                    $('.modal-title').html("Novo Registro");
 
-                $('.modal-body').html(html);
-                $('form', $('.modal-body')).attr('action', durl);
+                    $('.modal-body').html(html);
+                    onChangePropriedade();
+                    $('form', $('.modal-body')).attr('action', durl);
 
-                $('.selectpicker').selectpicker({});
-                $('.datetimepicker').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss'
-                });
-
-                $('form', $('.modal-body')).submit(function(e){
-                    e.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        url: durl,
-                        data: $('form', $('.modal-body')).serialize(),
-                        success: function(data){
-                            // refreshMolhos(propriedadeId);
-                            $('#modal-container-511775').modal('hide');
-                            location.reload();
-                        },
-                        error: function (data, xhr, ajaxOptions, thrownError) {
-                            $('.modal-body').html(data.responseText);
-                            }
+                    $('.selectpicker').selectpicker({});
+                    $('.datetimepicker').datetimepicker({
+                        format: 'YYYY-MM-DD HH:mm:ss'
                     });
-                });
-            }
+
+                    $('form', $('.modal-body')).submit(function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            type: "POST",
+                            url: durl,
+                            data: $('form', $('.modal-body')).serialize(),
+                            success: function(data){
+                                // refreshMolhos(propriedadeId);
+                                $('#modal-container-511775').modal('hide');
+                                location.reload();
+                            },
+                            error: function (data, xhr, ajaxOptions, thrownError) {
+                                $('.modal-body').html(data.responseText);
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
+        $('.btn-edit').on('click',function(){
+            var registroId = $(this).attr('registroId');
+            var durl = window.location.protocol+'//'+window.location.host+"/registro/update/"+registroId+"/";
+             $.ajax({
+                type: "GET",
+                url: durl,
+                success: function(data){
+                    html = $.parseHTML(data);
+                    $('.modal-title').html("Edição Registro");
+
+                    $('.modal-body').html(html);
+                    onChangePropriedade();
+                    $('form', $('.modal-body')).attr('action', durl);
+
+                    $('.selectpicker').selectpicker({});
+                    $('.datetimepicker').datetimepicker({
+                        format: 'YYYY-MM-DD HH:mm:ss'
+                    });
+
+                    $('form', $('.modal-body')).submit(function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            type: "POST",
+                            url: durl,
+                            data: $('form', $('.modal-body')).serialize(),
+                            success: function(data){
+                                // refreshMolhos(propriedadeId);
+                                $('#modal-container-511775').modal('hide');
+                                location.reload();
+                            },
+                            error: function (data, xhr, ajaxOptions, thrownError) {
+                                $('.modal-body').html(data.responseText);
+                                }
+                        });
+                    });
+                }
+            });
         });
     });
-
-    $('.btn-edit').on('click',function(){
-        var registroId = $(this).attr('registroId');
-        var durl = window.location.protocol+'//'+window.location.host+"/registro/update/"+registroId+"/";
-         $.ajax({
-            type: "GET",
-            url: durl,
-            success: function(data){
-                html = $.parseHTML(data);
-                $('.modal-title').html("Edição Registro");
-
-                $('.modal-body').html(html);
-                $('form', $('.modal-body')).attr('action', durl);
-
-                $('.selectpicker').selectpicker({});
-                $('.datetimepicker').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss'
-                });
-
-                $('form', $('.modal-body')).submit(function(e){
-                    e.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        url: durl,
-                        data: $('form', $('.modal-body')).serialize(),
-                        success: function(data){
-                            // refreshMolhos(propriedadeId);
-                            $('#modal-container-511775').modal('hide');
-                            location.reload();
-                        },
-                        error: function (data, xhr, ajaxOptions, thrownError) {
-                            $('.modal-body').html(data.responseText);
-                            }
-                    });
-                });
-            }
-        });
-    });
-});
-
 </script>
 {% endblock %}
