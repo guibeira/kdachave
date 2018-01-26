@@ -1,71 +1,163 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container-fluid">
+    <div class="block-header">
+        <h2>DASHBOARD</h2>
+    </div>
+
+    <!-- Widgets -->
+    <div class="row clearfix dashboard-molhos">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-cyan hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">query_builder</i>
+                </div>
+                <div class="content">
+                    <div class="text">Molhos Em Uso</div>
+                    <div class="number count-to" data-from="0" data-to="{{countEmUso}}" data-speed="15" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-light-green hover-expand-effect">
+                <div class="icon" > 
+                    <i class="material-icons">playlist_add_check</i>
+                </div>
+                <div class="content">
+                    <div class="text" style="font-size:12px!important;">Molhos Devolvidos</div>
+                    <div class="number count-to" data-from="0" data-to="{{countDevolvidos}}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-orange hover-expand-effect">
+                <div class="icon" ">
+                    <i class="material-icons">help</i>
+                </div>
+                <div class="content">
+                    <div class="text">Molhos Em Alerta</div>
+                    <div class="number count-to" data-from="0" data-to="{{countAlerta}}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-red hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">search</i>
+                </div>
+                <div class="content">
+                    <div class="text">Molhos Perdidos</div>
+                    <div class="number count-to" data-from="0" data-to="{{countPerdido}}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #END# Widgets -->
     <div class="row clearfix">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="card">
-                <div class="header">
-                    <div class="row clearfix">
-                        <div class="col-xs-12 col-sm-6">
-                            <h2>Registro</h2>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 align-right">
-                            <div class="panel-switch-btn">
-                                <a id="modal-511775" href="#modal-container-511775" role="button" class="btn btn-primary pull-right btn-new" data-toggle="modal">Novo</a>
-                            </div>
+            <div class="header">
+                <div class="row clearfix">
+                    <div class="col-xs-12 col-sm-6">
+                        <h2>Registros</h2>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 align-right">
+                        <div class="panel-switch-btn">
+                            <a id="modal-511775" href="#modal-container-511775" role="button" class="btn btn-primary pull-right btn-new" data-toggle="modal">Novo</a>
                         </div>
                     </div>
                 </div>
+            </div>
                 <div class="body">
-                    <div class="table-responsive">
-                        <table class="table table-hover dashboard-task-infos">
-                            <thead>
-                                <tr>
-                                    <th>Molhos</th>
-                                    <th>Responsável</th>
-                                    <th>Propriedade</th>
-                                    <th>Proprietário</th>
-                                    <th>Data Entrega</th>
-                                    <th>Data Previsão de Retorno</th>
-                                    <th>Data Devolução</th>
-                                    <th>Editar</th>
-                                    <th>Excluir</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for registro in registros %}
-                                    <tr>
-                                        <td>
-                                            {% for molho in registro.molhos.all %}
-                                                <table>
-                                                    <tbody>
-                                                        <td>{{molho}}</td>
-                                                        <td>Chaves:<br>{{molho.chaves}}</td>
-                                                        <td>Controles:<br>{{molho.controles}}</td>
-                                                    </tbody>
-                                                </table>
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{registro.pessoaRecebeu}}</td>
-                                        <td>{{registro.propriedade}}</td>
-                                        <td>{{registro.propriedade.pessoa}}</td>
-                                        <td>{{registro.dataEntrega}}</td>
-                                        <td>{{registro.dataPrevisaoRetorno}}</td>
-                                        <td>{{registro.dataRetorno}}</td>
-                                        <td>
+                    <div id="accordion">
+                        {% for registro in registros %}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" role="tablist" data-toggle="collapse" href="#collapse{{registro.pk}}" role="tab" role="button" aria-expanded="false" aria-controls="collapse{{registro.pk}}" id="heading{{registro.pk}}">
+                                            {{registro.propriedade}} - {{registro.responsavel}}
+                                        </button>
+                                        <span style="color:blue;">{{registro.dataPrevisaoRetorno}}</span>
+                                        <div style="float:right;">
                                             <a id="modal-511775" href="#modal-container-511775" registroId="{{registro.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">
                                                 <i class="material-icons">mode_edit</i>
                                             </a>
-                                        </td>
-                                        <td>
                                             <a href="{% url 'registro:delete' registro.pk %}" class="btn btn-danger">
                                                 <i class="material-icons">delete</i>
                                             </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                        </div>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse{{registro.pk}}" class="collapse" role="tabpanel" aria-labelledby="heading{{registro.pk}}" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="registro-detalhe">
+                                            <p><label>Propriedade:</label> {{registro.propriedade}} - {{registro.propriedade.pessoa}}</p>
+                                            <p><label>Data Entrega:</label> {{registro.dataEntrega}}</p>
+                                            <p><label>Data Previsão de Retorno:</label> {{registro.dataPrevisaoRetorno}}</p>
+                                            <p><label>Funcionário:</label> {{registro.funcionario}}</p>
+                                            <p><label>Responsável:</label> {{registro.responsavel}}</p>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table noDataTable table-hover dashboard-task-infos">
+                                                <thead>
+                                                    <th>Molho</th>
+                                                    <th>Chaves</th>
+                                                    <th>Controles</th>
+                                                    <th>Status</th>
+                                                </thead>    
+                                                <tbody>
+                                                    {% for molho in registro.molhos.all %}
+                                                        <tr>
+                                                            <td>{{molho}}</td>
+                                                            <td>{{molho.chaves}}</td>
+                                                            <td>{{molho.controles}}</td>
+                                                            <td class="td-status">
+                                                                <a href="" class="status-atual" molhoId="{{molho.pk}}" statusId="{{molho.status}}">
+                                                                    {% if molho.status == 0 %}
+                                                                        <span class="label bg-light-blue">Em Uso</span>
+                                                                    {% elif molho.status == 1 %}
+                                                                        <span class="label bg-green">Devolvido</span>
+                                                                    {% elif molho.status == 2 %}
+                                                                        <span class="label bg-orange">Alerta</span>
+                                                                    {% else %}
+                                                                        <span class="label bg-red">Perdido</span>
+                                                                    {% endif %}
+                                                                </a>
+                                                                <div class="change-status hidden">
+                                                                    <ul class="list-group">
+                                                                        <li class="list-group-item status-item" statusId="0" molhoId="{{molho.pk}}">
+                                                                            <a href="">
+                                                                                <span class="label bg-light-blue">Em Uso</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="list-group-item status-item" statusId="1" molhoId="{{molho.pk}}">
+                                                                            <a href="">
+                                                                                <span class="label bg-green">Devolvido</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="list-group-item status-item" statusId="2" molhoId="{{molho.pk}}">
+                                                                            <a href="">
+                                                                                <span class="label bg-orange">Alerta</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="list-group-item status-item" statusId="3" molhoId="{{molho.pk}}">
+                                                                            <a href="">
+                                                                                <span class="label bg-red">Perdido</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul> 
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -89,7 +181,17 @@
     </div>
 </div>
 {% endblock content %}
+
 {% block extrajs %}
+<style>
+    .registro-detalhe {
+        padding: 10px 0px 10px 15px;
+    }
+    .change-status{
+        position:absolute;
+        z-index: 9999;
+    }
+</style>
 <script>
     var csrftoken = $.cookie('csrftoken');
     function onChangePropriedade(){
@@ -110,9 +212,23 @@
         });
     }
 
+    function updateDashBoard(){
+        var durl = window.location.protocol+'//'+window.location.host+"/updateDashboard/";
+        $.ajax({
+            type: "POST",
+            url: durl,
+            beforeSend: function(xhr, settings) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function(data){
+                $('.dashboard-molhos').html(data);
+            }
+        });
+    }
+
     $(document).ready(function() {
 
-        $('.table').DataTable();
+        $('.table:not(.noDataTable)').DataTable();
 
         $('.datetimepicker').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss'
@@ -182,7 +298,6 @@
                             url: durl,
                             data: $('form', $('.modal-body')).serialize(),
                             success: function(data){
-                                // refreshMolhos(propriedadeId);
                                 $('#modal-container-511775').modal('hide');
                                 location.reload();
                             },
@@ -191,6 +306,32 @@
                                 }
                         });
                     });
+                }
+            });
+        });
+
+        $('.td-status').on('click',function(e){
+            e.preventDefault();
+            $('.change-status', $(this)).toggleClass('hidden');
+        });
+
+        $('.status-item').on('click', function(e){
+            e.preventDefault();
+            var statusId = $(this).attr('statusId');
+            var molhoId = $(this).attr('molhoId');
+            $('.status-atual[molhoId="'+molhoId+'"]').html($(this).children().html());
+            var durl = window.location.protocol+'//'+window.location.host+"/molho/updateStatus/"+molhoId+"/"+statusId+"/";
+            $.ajax({
+                type: "POST",
+                url: durl,
+                beforeSend: function(xhr, settings) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function(data){
+                    updateDashBoard();
+                },
+                error: function (data, xhr, ajaxOptions, thrownError) {
+                    alert("Deu erro");
                 }
             });
         });

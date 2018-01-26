@@ -70,3 +70,9 @@ class DeleteMolho(LoginRequiredMixin, DeleteView):
         propriedade = self.object.propriedade
         self.object.delete()
         return redirect('propriedade:detalhe', pk=propriedade.pk )
+
+def update_status(request, pk, statusId):
+    molho = get_object_or_404(Molho,pk=pk)
+    molho.status = statusId
+    molho.save()
+    return HttpResponse(200);

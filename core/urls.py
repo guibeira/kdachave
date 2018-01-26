@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'pessoa/', include('pessoa.urls.pessoa', namespace="pessoa")),
     url(r'molho/', include('molho.urls', namespace="molho")),
     url(r'registro/', include('registro.urls', namespace="registro")),
+    url(r'updateDashboard/', views.updateDashboard , name="updateDashboard"),
 ]
