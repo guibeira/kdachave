@@ -30,49 +30,32 @@
                     </ul>
                 </div>
                 <div class="body">
-                    <!-- <div id="real_time_chart" class="dashboard-flot-chart"></div> -->
                     <table class="table">
-              				<thead>
-              					<tr>
-              						<th>
-              							Nome
-              						</th>
-              						<th>
-              							Telefone Residencial
-              						</th>
-              						<th>
-                            Celular
-              						</th>
-                          <th>
-                               Editar
-                              </th>
-                             <th>
-                               Deletar
-                          </th>
-              					</tr>
-              				</thead>
-              				<tbody>
-                          {% for pessoa in pessoas %}
-                              <tr>
-                                  <td>
-                                      {{ pessoa }}
-                                  </td>
-                                  <td>
-                                      {{ pessoa.telefoneResidencial }}
-                                  </td>
-                                  <td>
-                                      {{ pessoa.celular1 }}
-                                  </td>
-                                  <td>
-                                      <a href="{% url 'pessoa:update' pessoa.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
-                                   </td>
-                                   <td>
-                                      <a href="{% url 'pessoa:delete' pessoa.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
-                                   </td>
-                              </tr>
-                          {% endfor %}
-              				</tbody>
-              			</table>
+          				<thead>
+          					<tr>
+                                <th> Nome </th>
+                                <th> Telefone Residencial </th>
+                                <th> Celular </th>
+                                <th> Editar </th>
+                                <th> Deletar </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pessoa in pessoas %}
+                                <tr>
+                                    <td> {{ pessoa }}</td>
+                                    <td> {{ pessoa.telefoneResidencial }}</td>
+                                    <td> {{ pessoa.celular1 }}</td>
+                                    <td>
+                                        <a href="{% url 'pessoa:update' pessoa.pk %}" class="btn btn-info">    <i class="material-icons">mode_edit</i> </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'pessoa:delete' pessoa.pk %}" class="btn btn-danger">    <i class="material-icons">delete</i> </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -84,7 +67,9 @@
 {% block extrajs %}
 <script>
     $(document).ready(function(){
-        $('.table').DataTable();
+        $('.table').DataTable({
+            responsive: true
+        });
     });
 </script>
 {% endblock extrajs %}

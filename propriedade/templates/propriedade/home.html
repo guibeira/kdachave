@@ -73,7 +73,7 @@
 							{{propriedade.pessoa}}
 						</td>
 						<td>
-							{{propriedade.endereco}}
+							{{propriedade.logradouro}} - {{propriedade.cidade}} {{propriedade.estado}}
 						</td>
 						<td>
 							{{propriedade.tipoPropriedade}}
@@ -107,7 +107,9 @@
 {% block extrajs %}
 <script>
     $(document).ready(function(){
-        $('.table').DataTable();
+        $('.table').DataTable({
+            responsive: true
+        });
     });
 </script>
 {% endblock extrajs %}

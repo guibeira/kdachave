@@ -228,7 +228,10 @@
 
     $(document).ready(function() {
 
-        $('.table:not(.noDataTable)').DataTable();
+        $('.table:not(.noDataTable)').DataTable({
+            responsive: true
+        });
+        
 
         $('.datetimepicker').datetimepicker({
             format: 'YYYY-MM-DD HH:mm:ss'
