@@ -8,8 +8,8 @@ class RegistroForm(forms.ModelForm):
 					'dataEntrega',
 					'dataPrevisaoRetorno',
 					'dataRetorno',
-					'pessoaEntregue',
-					'pessoaRecebeu',
+					'funcionario',
+					'responsavel',
 					'propriedade',
 					'molhos',
 				]
