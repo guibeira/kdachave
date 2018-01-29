@@ -73,11 +73,11 @@
                         {% for registro in registros %}
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" role="tablist" data-toggle="collapse" href="#collapse{{registro.pk}}" role="tab" role="button" aria-expanded="false" aria-controls="collapse{{registro.pk}}" id="heading{{registro.pk}}">
-                                            {{registro.propriedade}} - {{registro.responsavel}}
+                                    <h5 class="mb-0" data-toggle="collapse" href="#collapse{{registro.pk}}" role="tab" role="button" aria-expanded="false" aria-controls="collapse{{registro.pk}}" id="heading{{registro.pk}}">
+                                        <button class="btn btn-link" role="tablist">
+                                            {{registro.propriedade}}
                                         </button>
-                                        <span style="color:blue;">{{registro.dataPrevisaoRetorno}}</span>
+                                        <span>{{registro.responsavel}}</span> <span style="color:blue;">{{registro.dataPrevisaoRetorno}}</span>
                                         <div style="float:right;">
                                             <a id="modal-511775" href="#modal-container-511775" registroId="{{registro.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">
                                                 <i class="material-icons">mode_edit</i>
