@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Molho(models.Model):
 	descricao = models.CharField(max_length=150)
 	chaves = models.IntegerField('Quantidade de Chaves')

@@ -5,7 +5,6 @@ from registro.forms import RegistroForm
 from registro.models import Registro
 from molho.models import Molho
 
-# Create your views here.
 @login_required
 def index(request):
 	registros = Registro.objects.all().order_by('dataPrevisaoRetorno')

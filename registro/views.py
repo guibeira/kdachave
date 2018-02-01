@@ -14,6 +14,8 @@ def create(request):
 		form = RegistroForm(request.POST)
 		if form.is_valid():
 			registro = form.save()
+			registro.usuario = request.user
+			registro.save()
 			for molho in registro.molhos.all():
 				molho.status = 0 # em uso
 				molho.save()
