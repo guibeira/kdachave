@@ -9,7 +9,7 @@
                         </button >
                         <span>{{registro.responsavel}}</span> <span style="color:blue;">{{registro.dataPrevisaoRetorno}}</span>
                         <div style="float:right;">
-                            <a id="modal-511775" href="#modal-container-511775" registroId="{{registro.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">
+                            <a id="modal-511775" href="#modal-container-5117751" registroId="{{registro.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">
                                 <i class="material-icons">mode_edit</i>
                             </a>
                             <a href="{% url 'registro:delete' registro.pk %}" class="btn btn-danger">
@@ -43,41 +43,15 @@
                                             <td>{{molho.chaves}}</td>
                                             <td>{{molho.controles}}</td>
                                             <td class="td-status">
-                                                <a href="" class="status-atual" molhoId="{{molho.pk}}" statusId="{{molho.status}}">
-                                                    {% if molho.status == 0 %}
-                                                        <span class="label bg-light-blue">Em Uso</span>
-                                                    {% elif molho.status == 1 %}
-                                                        <span class="label bg-green">Devolvido</span>
-                                                    {% elif molho.status == 2 %}
-                                                        <span class="label bg-orange">Alerta</span>
-                                                    {% else %}
-                                                        <span class="label bg-red">Perdido</span>
-                                                    {% endif %}
-                                                </a>
-                                                <div class="change-status hidden">
-                                                    <ul class="list-group">
-                                                        <li class="list-group-item status-item" statusId="0" molhoId="{{molho.pk}}">
-                                                            <a href="">
-                                                                <span class="label bg-light-blue">Em Uso</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-group-item status-item" statusId="1" molhoId="{{molho.pk}}">
-                                                            <a href="">
-                                                                <span class="label bg-green">Devolvido</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-group-item status-item" statusId="2" molhoId="{{molho.pk}}">
-                                                            <a href="">
-                                                                <span class="label bg-orange">Alerta</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-group-item status-item" statusId="3" molhoId="{{molho.pk}}">
-                                                            <a href="">
-                                                                <span class="label bg-red">Perdido</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                {% if molho.status == 0 %}
+                                                    <span class="label bg-light-blue">Em Uso</span>
+                                                {% elif molho.status == 1 %}
+                                                    <span class="label bg-green">Devolvido</span>
+                                                {% elif molho.status == 2 %}
+                                                    <span class="label bg-orange">Alerta</span>
+                                                {% else %}
+                                                    <span class="label bg-red">Perdido</span>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -90,3 +64,85 @@
         {% endfor %}
     </div>
 </div>
+<div class="modal fade" id="modal-container-5117751" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Modal title
+                </h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .registro-detalhe {
+        padding: 10px 0px 10px 15px;
+    }
+    .change-status{
+        position:absolute;
+        z-index: 9999;
+    }
+</style>
+{% block extrajs %}
+<script>
+
+$(document).ready(function() {
+
+    $('.table:not(.noDataTable)').DataTable({
+        responsive: true
+    });
+
+
+    $('.datetimepicker').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+
+
+    $('.btn-edit').on('click',function(){
+        console.log($('#modal-container-5117751'));
+        var registroId = $(this).attr('registroId');
+        var durl = window.location.protocol+'//'+window.location.host+"/registro/update/"+registroId+"/";
+         $.ajax({
+            type: "GET",
+            url: durl,
+            success: function(data){
+                html = $.parseHTML(data);
+                $('.modal-title').html("Edição Registro");
+
+                $('.modal-body').html(html);
+                onChangePropriedade();
+                $('form', $('.modal-body')).attr('action', durl);
+
+                $('.selectpicker').selectpicker({});
+                $('.datetimepicker').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+
+                $('form', $('.modal-body')).submit(function(e){
+                    e.preventDefault();
+                    $.ajax({
+                        type: "POST",
+                        url: durl,
+                        data: $('form', $('.modal-body')).serialize(),
+                        success: function(data){
+                            $('#modal-container-5117751').modal('hide');
+                            location.reload();
+                        },
+                        error: function (data, xhr, ajaxOptions, thrownError) {
+                            $('.modal-body').html(data.responseText);
+                            }
+                    });
+                });
+            }
+        });
+    });
+
+});
+</script>
+{% endblock %}

@@ -44,6 +44,6 @@ def devolvidos():
 
 def nao_devolvidos():
     registros = Registro.objects.filter(
-        dataRetorno__isnull=False, dataPrevisaoRetorno__gt=now
+        dataRetorno__isnull=True, dataPrevisaoRetorno__gte=now
     ).order_by('dataPrevisaoRetorno')
     return registros

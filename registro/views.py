@@ -37,12 +37,12 @@ def update(request, pk):
 	registro = get_object_or_404(Registro,pk=pk)
 	if request.method == "POST":
 		form = RegistroForm(request.POST, instance=registro)
-		if form.is_valid() and formMolho.is_valid():
+		if form.is_valid():
 			registro = form.save()
 			return redirect('home')
 		else:
 			context = {
-				'form': form ,
+				'form': form,
 			}
 			return render(request, 'registro/registro_form.html', context)
 	else:

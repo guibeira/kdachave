@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
 <div class="container-fluid">
     <div class="row ">
@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 align-right">
                             <div class="panel-switch-btn">
-                                    <a href="{% url 'propriedade:update' propriedade.pk %}" class="btn btn-info">    
+                                    <a href="{% url 'propriedade:update' propriedade.pk %}" class="btn btn-info">
                                     <i class="material-icons">mode_edit</i> </a>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                                 <label>Cep:</label> {{propriedade.cep}}
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel panel-default">
@@ -46,6 +46,7 @@
                                                     <th> Descrição </th>
                                                     <th> Quantidade de Chaves </th>
                                                     <th> Quantidade de Controles </th>
+                                                    <th> Status </th>
                                                     <th> Editar </th>
                                                     <th> Excluir </th>
                                                 </tr>
@@ -56,9 +57,46 @@
                                                         <td> {{ molho.descricao }} </td>
                                                         <td> {{ molho.chaves }} </td>
                                                         <td> {{ molho.controles }} </td>
+                                                        <td class="td-status">
+                                                            <a href="" class="status-atual" molhoId="{{molho.pk}}" statusId="{{molho.status}}">
+                                                                {% if molho.status == 0 %}
+                                                                    <span class="label bg-light-blue">Em Uso</span>
+                                                                {% elif molho.status == 1 %}
+                                                                    <span class="label bg-green">Devolvido</span>
+                                                                {% elif molho.status == 2 %}
+                                                                    <span class="label bg-orange">Alerta</span>
+                                                                {% else %}
+                                                                    <span class="label bg-red">Perdido</span>
+                                                                {% endif %}
+                                                            </a>
+                                                            <div class="change-status hidden">
+                                                                <ul class="list-group">
+                                                                    <li class="list-group-item status-item" statusId="0" molhoId="{{molho.pk}}">
+                                                                        <a href="">
+                                                                            <span class="label bg-light-blue">Em Uso</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="list-group-item status-item" statusId="1" molhoId="{{molho.pk}}">
+                                                                        <a href="">
+                                                                            <span class="label bg-green">Devolvido</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="list-group-item status-item" statusId="2" molhoId="{{molho.pk}}">
+                                                                        <a href="">
+                                                                            <span class="label bg-orange">Alerta</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="list-group-item status-item" statusId="3" molhoId="{{molho.pk}}">
+                                                                        <a href="">
+                                                                            <span class="label bg-red">Perdido</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
                                                         <td>
                                                             <a id="modal-511775" href="#modal-container-511775" propriedadeId="{{propriedade.pk}}" molhoId="{{molho.pk}}" tipo="molho" role="button" class="btn btn-info btn-edit" data-toggle="modal">
-                                                                <i class="material-icons">mode_edit</i> 
+                                                                <i class="material-icons">mode_edit</i>
                                                             </a>
                                                         </td>
                                                         <td>
@@ -121,7 +159,7 @@
 
                     $('.modal-body').html(html);
                     $('form', $('.modal-body')).attr('action', durl);
-                
+
                     $('form', $('.modal-body')).submit(function(e){
                         e.preventDefault();
                         $.ajax({
@@ -156,7 +194,7 @@
 
                     $('.modal-body').html(html);
                     $('form', $('.modal-body')).attr('action', durl);
-                
+
                     $('form', $('.modal-body')).submit(function(e){
                         e.preventDefault();
                         $.ajax({
@@ -176,6 +214,33 @@
                 }
             });
         });
+
+        $('.td-status').on('click',function(e){
+            e.preventDefault();
+            $('.change-status', $(this)).toggleClass('hidden');
+        });
+
+        $('.status-item').on('click', function(e){
+            e.preventDefault();
+            var statusId = $(this).attr('statusId');
+            var molhoId = $(this).attr('molhoId');
+            $('.status-atual[molhoId="'+molhoId+'"]').html($(this).children().html());
+            var durl = window.location.protocol+'//'+window.location.host+"/molho/updateStatus/"+molhoId+"/"+statusId+"/";
+            $.ajax({
+                type: "POST",
+                url: durl,
+                beforeSend: function(xhr, settings) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function(data){
+                    
+                },
+                error: function (data, xhr, ajaxOptions, thrownError) {
+                    alert("Deu erro");
+                }
+            });
+        });
+
     });
 </script>
 {% endblock extrajs %}

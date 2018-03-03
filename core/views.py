@@ -9,7 +9,7 @@ from molho.models import Molho
 def registro_filter(request):
 	filtro = request.POST.get('filter_by')
 	template_name = 'tabela.html'
-	print(filtro)
+	
 	if filtro not in ['atrasados', 'adevolder', 'devolvidos']:
 		return Http404
 	if filtro == 'atrasados':

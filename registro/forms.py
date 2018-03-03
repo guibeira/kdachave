@@ -7,6 +7,7 @@ class RegistroForm(forms.ModelForm):
 		fields =[
 					'dataEntrega',
 					'dataPrevisaoRetorno',
+					'dataRetorno',
 					'responsavel',
 					'propriedade',
 					'molhos',

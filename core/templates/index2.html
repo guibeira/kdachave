@@ -2,52 +2,41 @@
 {% block content %}
 <div class="container-fluid">
     <div class="block-header">
-        <h2>DASHBOARD</h2>
+        <h2>DASHBOARD REGISTRO</h2>
     </div>
 
     <!-- Widgets -->
     <div class="row clearfix dashboard-molhos">
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="info-box bg-cyan hover-expand-effect">
                 <div class="icon">
                     <i class="material-icons">query_builder</i>
                 </div>
                 <div class="content">
-                    <div class="text">Molhos Em Uso</div>
+                    <div class="text">À Devolver</div>
                     <div class="number count-to" data-from="0" data-to="{{nao_devolvidos|length}}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="info-box bg-light-green hover-expand-effect">
                 <div class="icon" >
                     <i class="material-icons">playlist_add_check</i>
                 </div>
                 <div class="content">
-                    <div class="text" style="font-size:12px!important;">Molhos Devolvidos</div>
+                    <div class="text" style="font-size:12px!important;">Devolvidos</div>
                     <div class="number count-to" data-from="0" data-to="{{ devolvidos|length }}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="info-box bg-orange hover-expand-effect">
                 <div class="icon">
                     <i class="material-icons">help</i>
                 </div>
                 <div class="content">
-                    <div class="text">Molhos Em Alerta</div>
+                    <div class="text">Atrasados</div>
                     <div class="number count-to" data-from="0" data-to="{{ atrasados|length }}" data-speed="1000" data-fresh-interval="20"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-red hover-expand-effect">
-                <div class="icon">
-                    <i class="material-icons">search</i>
-                </div>
-                <div class="content">
-                    <div class="text">Molhos Perdidos</div>
-                    <div class="number count-to" data-from="0" data-to="{{ articles|length }}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -74,24 +63,24 @@
               		<div class="col-md-12">
               			<div class="tabbable" id="tabs-978655">
               				<ul class="nav nav-tabs">
-              					<li class="active">
-              						<a href="#panel-atrasados" class='atrasados' data-toggle="tab">Atrasados</a>
-              					</li>
-              					<li>
-              						<a href="#panel-adevolder" class='adevolder' data-toggle="tab">À devolver</a>
-              					</li>
-                        <li>
+                                <li class="active">
+                                    <a href="#panel-adevolder" class='adevolder' data-toggle="tab">À devolver</a>
+                                </li>
+                                <li>
+                                    <a href="#panel-atrasados" class='atrasados' data-toggle="tab">Atrasados</a>
+                                </li>
+                                <li>
               						<a href="#panel-devolvidos" class='devolvidos' data-toggle="tab">Devolvidos</a>
               					</li>
               				</ul>
-              				<div class="tab-content">
-              					<div class="tab-pane active" id="panel-atrasados">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="panel-adevolder">
 
-              					</div>
-              					<div class="tab-pane" id="panel-adevolder">
+                                </div>
+                                <div class="tab-pane" id="panel-atrasados">
 
-              					</div>
-                        <div class="tab-pane" id="panel-devolvidos">
+                                </div>
+                                <div class="tab-pane" id="panel-devolvidos">
 
               					</div>
               				</div>
@@ -123,19 +112,12 @@
 {% endblock content %}
 
 {% block extrajs %}
-<style>
-    .registro-detalhe {
-        padding: 10px 0px 10px 15px;
-    }
-    .change-status{
-        position:absolute;
-        z-index: 9999;
-    }
-</style>
 <script>
+
     setTimeout(function(){
-          $('.atrasados').click();
-    },500);
+        $('.adevolder').click();
+    },200);
+
     $('a[data-toggle="tab"]').click(function(event) {
       var filter_by = $(this).attr("class");
       var aba = $(this).attr("href");
@@ -233,69 +215,6 @@
             });
         });
 
-        $('.btn-edit').on('click',function(){
-            var registroId = $(this).attr('registroId');
-            var durl = window.location.protocol+'//'+window.location.host+"/registro/update/"+registroId+"/";
-             $.ajax({
-                type: "GET",
-                url: durl,
-                success: function(data){
-                    html = $.parseHTML(data);
-                    $('.modal-title').html("Edição Registro");
-
-                    $('.modal-body').html(html);
-                    onChangePropriedade();
-                    $('form', $('.modal-body')).attr('action', durl);
-
-                    $('.selectpicker').selectpicker({});
-                    $('.datetimepicker').datetimepicker({
-                        format: 'YYYY-MM-DD HH:mm:ss'
-                    });
-
-                    $('form', $('.modal-body')).submit(function(e){
-                        e.preventDefault();
-                        $.ajax({
-                            type: "POST",
-                            url: durl,
-                            data: $('form', $('.modal-body')).serialize(),
-                            success: function(data){
-                                $('#modal-container-511775').modal('hide');
-                                location.reload();
-                            },
-                            error: function (data, xhr, ajaxOptions, thrownError) {
-                                $('.modal-body').html(data.responseText);
-                                }
-                        });
-                    });
-                }
-            });
-        });
-
-        $('.td-status').on('click',function(e){
-            e.preventDefault();
-            $('.change-status', $(this)).toggleClass('hidden');
-        });
-
-        $('.status-item').on('click', function(e){
-            e.preventDefault();
-            var statusId = $(this).attr('statusId');
-            var molhoId = $(this).attr('molhoId');
-            $('.status-atual[molhoId="'+molhoId+'"]').html($(this).children().html());
-            var durl = window.location.protocol+'//'+window.location.host+"/molho/updateStatus/"+molhoId+"/"+statusId+"/";
-            $.ajax({
-                type: "POST",
-                url: durl,
-                beforeSend: function(xhr, settings) {
-                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                },
-                success: function(data){
-                    updateDashBoard();
-                },
-                error: function (data, xhr, ajaxOptions, thrownError) {
-                    alert("Deu erro");
-                }
-            });
-        });
     });
 </script>
 {% endblock %}
