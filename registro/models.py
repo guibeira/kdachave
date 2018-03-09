@@ -19,10 +19,14 @@ class Registro(models.Model):
 
     @property
     def status(self):
-        if self.dataRetorno is None:
-            return 'Atrasado'
+        if self in atrasados():
+            return 'atrasado'
+        elif self in devolvidos():
+            return 'devolvido'
+        elif self in nao_devolvidos():
+            return 'não devolvido'
         else:
-            return 'deboas'
+            'erro'
 
     def __str__(self):
         return str(self.usuario.username)
