@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistroForm, RegistroSaidaForm, RegistroDevolucaoForm
 from .models import Registro
+from django.http import JsonResponse
 from django.urls import reverse
 from apps.propriedade.models import Propriedade
 from apps.molho.models import Molho
@@ -23,11 +24,7 @@ def saida(request):
 				molho.save()
 			return redirect('home')
 		else:
-			context = {
-				'form': form,
-				'action': reverse('registro:saida')
-			}
-			return render(request, 'registro/registro_form.html', context)
+			return JsonResponse(form.errors.as_json(), safe=False, status=500)
 	else:
 		form = RegistroSaidaForm()
 		context = {
