@@ -32,20 +32,28 @@ READ_ONLY_FILE = os.path.join(BASE_DIR, 'readonly')
 
 # Application definition
 
-INSTALLED_APPS = [
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'widget_tweaks',
+
+]
+LOCAL_APPS = [
     'apps.core',
     'apps.pessoa',
     'apps.propriedade',
     'apps.molho',
     'apps.registro',
 ]
+THIRD_PARTY = [
+    'widget_tweaks',
+]
+
+INSTALLED_APPS = DJANGO_APPS+LOCAL_APPS+THIRD_PARTY
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 

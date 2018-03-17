@@ -1,7 +1,7 @@
 {% load check_type_field %}
 {% load widget_tweaks %}
 
-  <form class="form-horizontal" action="{{action}}"  method="POST">
+  <form class="form-horizontal sendform" action="{{action}}"  method="POST">
     <fieldset>
     <!-- Form Name -->
     {% csrf_token %}
@@ -42,7 +42,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="singlebutton"></label>
         <div class="col-md-4">
-          <button  type="submit" id="singlebutton" name="singlebutton" class="btn btn-primary">Salvar</button>
+          <button  type="submit" name="singlebutton" class="btn btn-primary">Salvar</button>
         </div>
       </div>
       <br>

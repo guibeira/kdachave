@@ -42,7 +42,8 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet" />
-
+    <!-- toastr css -->
+    <link href="{% static 'bower_components/toastr/toastr.css' %}" rel="stylesheet">
     <!-- Datetimepiker bootstrap 3 -->
 
     <link rel="stylesheet" href="{% static '/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" />
@@ -568,6 +569,8 @@
     <script src="{% static 'bower_components/moment/locale/pt-br.js' %}"></script>
     <!-- Select2 Js -->
     <script src="{% static 'bower_components/select2/dist/js/select2.min.js' %}"></script>
+    <!-- toastr-for notifications -->
+    <script src="{% static 'bower_components/toastr/toastr.js' %}"></script>
 </body>
 
 </html>
@@ -575,7 +578,9 @@
 $(document).ready(function() {
 
   $('body').on('focus',".datetimepicker", function(){
-    $(this).datetimepicker();
+    $(this).datetimepicker({
+        locale: 'pt-br'
+    });
 });
 
 });

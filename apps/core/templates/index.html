@@ -125,34 +125,50 @@
     setTimeout(function(){
         $('.adevolder').click();
     },200);
-    function loadSaidaForm(){
-      $.ajax({
-          type: "GET",
-          url: "{% url 'registro:saida' %}",
+    loadSaidaForm("{% url 'registro:saida' %}")
+    loadDevolucaoForm("{% url 'registro:devolucao' %}")
 
-          beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          },
-          success: function(data){
-            $("#saidaform").html(data);
-          }
-      });
-    }
-    function loadDevolucaoForm(){
-      $.ajax({
-          type: "GET",
-          url: "{% url 'registro:devolucao' %}",
+    $(document).on('submit', '.sendform', function(e){
 
-          beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          },
-          success: function(data){
-            $("#retornoform").html(data);
-          }
-      });
-    }
-    loadSaidaForm()
-    loadDevolucaoForm()
+        e.preventDefault();
+        console.log('enviando form ');
+        var procedimentos = []
+        toastr.options.closeButton = true;
+        console.log($(this).serialize());
+        $.ajax({
+            type: "POST",
+            url : $(this).attr('action'),
+            traditional: true,
+            data: $(this).serialize(),
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function (retorno) {
+              console.log('deu boa');
+              console.log(retorno);
+            //     $('form')[0].reset();
+            //     $('.list-procedimento').html('');
+            //     toastr.success('Atendimento criado', 'Sucesso');
+            //     setTimeout(() => {
+            //         window.open(retorno);
+            //         location.reload();
+            //     }, 500);
+            },
+            error: function (retorno) {
+              console.log('deu ruim')
+                // data = JSON.parse(retorno.responseJSON);
+                // var keys = Object.keys(data);
+                // // var val = Object.val(data);
+                // for (i = 0; i < keys.length; i++) {
+                //     var res = keys[i].replace("_", " ");
+                //     toastr.error(data[keys[i]][0].message, res.toUpperCase() + ' !')
+                // }
+
+            }
+        });
+    });
+
+
     $('a[data-toggle="tab"]').click(function(event) {
       var filter_by = $(this).attr("class");
       var aba = $(this).attr("href");
