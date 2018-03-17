@@ -9,7 +9,7 @@ from molho.models import Molho
 def registro_filter(request):
 	filtro = request.POST.get('filter_by')
 	template_name = 'tabela.html'
-	
+
 	if filtro not in ['atrasados', 'adevolder', 'devolvidos']:
 		return Http404
 	if filtro == 'atrasados':
@@ -27,13 +27,14 @@ def registro_filter(request):
 
 @login_required
 def index(request):
-	template_name = 'index2.html'
+	template_name = 'index.html'
 	context = {
 		'atrasados': atrasados(),
 		'devolvidos': devolvidos(),
 		'nao_devolvidos': nao_devolvidos(),
 	}
 	return render(request, template_name, context)
+
 
 @login_required
 def updateDashboard(request):
