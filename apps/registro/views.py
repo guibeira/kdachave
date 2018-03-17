@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistroForm
 from .models import Registro
-from propriedade.models import Propriedade
-from molho.models import Molho
+from apps.propriedade.models import Propriedade
+from apps.molho.models import Molho
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required

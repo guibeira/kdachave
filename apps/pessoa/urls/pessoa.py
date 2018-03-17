@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from pessoa import views
+from apps.pessoa import views
 
 urlpatterns = [
     url(r'^$', views.pessoahome, name='home'),

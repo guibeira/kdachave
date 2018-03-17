@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from .models import Molho
-from propriedade.models import Propriedade
+from apps.propriedade.models import Propriedade
 from .forms import MolhoForm
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView

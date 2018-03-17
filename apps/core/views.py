@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from registro.models import Registro, atrasados, devolvidos, nao_devolvidos
-from molho.models import Molho
+from apps.registro.models import Registro, atrasados, devolvidos, nao_devolvidos
+from apps.molho.models import Molho
 
 
 @login_required

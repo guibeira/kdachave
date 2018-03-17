@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
 from .forms import PessoaForm, UserForm, UserWithoutPasswordForm
-from pessoa.models import Pessoa
+from apps.pessoa.models import Pessoa
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash

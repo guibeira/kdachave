@@ -2,7 +2,7 @@ from django.apps import AppConfig
 
 
 class RegistroConfig(AppConfig):
-    name = 'registro'
+    name = 'apps.registro'
 
     def ready(self):
-        import registro.signals
+        import apps.registro.signals

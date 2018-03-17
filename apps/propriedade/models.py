@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Endereco
+from apps.core.models import Endereco
 
 
 class Propriedade(Endereco):
