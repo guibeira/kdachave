@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <div class="container-fluid">
     <div class="block-header">
@@ -42,6 +43,26 @@
         </div>
     </div>
     <!-- #END# Widgets -->
+    <!-- Formulários carregados via ajax -->
+    <div class="row clearfix">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="header text-center"><h2>Saida</h2></div>
+                  <div id="saidaform" class="container-fluid">
+
+                  </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="card">
+                <div class="header text-center"><h2>Retorno</h2></div>
+                <div id="retornoform" class="container-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #Final dos Formulários-->
+    <!-- Tabela dos registros -->
     <div class="row clearfix">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="card">
@@ -92,32 +113,46 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="modal-container-511775" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    ×
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    Modal title
-                </h4>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
+    <!-- #Final da Tabela de resgistros -->
 </div>
 {% endblock content %}
 
 {% block extrajs %}
+<!-- custom Js -->
+<script src="{% static 'js/custom.js' %}"></script>
 <script>
 
     setTimeout(function(){
         $('.adevolder').click();
     },200);
+    function loadSaidaForm(){
+      $.ajax({
+          type: "GET",
+          url: "{% url 'registro:saida' %}",
 
+          beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          },
+          success: function(data){
+            $("#saidaform").html(data);
+          }
+      });
+    }
+    function loadDevolucaoForm(){
+      $.ajax({
+          type: "GET",
+          url: "{% url 'registro:devolucao' %}",
+
+          beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          },
+          success: function(data){
+            $("#retornoform").html(data);
+          }
+      });
+    }
+    loadSaidaForm()
+    loadDevolucaoForm()
     $('a[data-toggle="tab"]').click(function(event) {
       var filter_by = $(this).attr("class");
       var aba = $(this).attr("href");
@@ -173,9 +208,9 @@
         });
 
 
-        $('.datetimepicker').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss'
-        });
+        // $('.datetimepicker').datetimepicker({
+        //     format: 'YYYY-MM-DD HH:mm:ss'
+        // });
 
         $('.btn-new').on('click',function(){
             var durl = window.location.protocol+'//'+window.location.host+"/registro/create";
@@ -190,10 +225,10 @@
                     onChangePropriedade();
                     $('form', $('.modal-body')).attr('action', durl);
 
-                    $('.selectpicker').selectpicker({});
-                    $('.datetimepicker').datetimepicker({
-                        format: 'YYYY-MM-DD HH:mm:ss'
-                    });
+                    // $('.selectpicker').selectpicker({});
+                    // $('.datetimepicker').datetimepicker({
+                    //     format: 'YYYY-MM-DD HH:mm:ss'
+                    // });
 
                     $('form', $('.modal-body')).submit(function(e){
                         e.preventDefault();

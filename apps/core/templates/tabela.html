@@ -98,12 +98,6 @@ $(document).ready(function() {
         responsive: true
     });
 
-
-    $('.datetimepicker').datetimepicker({
-        format: 'YYYY-MM-DD HH:mm:ss'
-    });
-
-
     $('.btn-edit').on('click',function(){
         console.log($('#modal-container-5117751'));
         var registroId = $(this).attr('registroId');
@@ -118,11 +112,6 @@ $(document).ready(function() {
                 $('.modal-body').html(html);
                 onChangePropriedade();
                 $('form', $('.modal-body')).attr('action', durl);
-
-                $('.selectpicker').selectpicker({});
-                $('.datetimepicker').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss'
-                });
 
                 $('form', $('.modal-body')).submit(function(e){
                     e.preventDefault();
