@@ -47,10 +47,7 @@ def devolucao(request):
 				molho.save()
 			return redirect('home')
 		else:
-			context = {
-				'form': form,
-			}
-			return render(request, 'registro/registro_form.html', context)
+			return JsonResponse(form.errors.as_json(), safe=False, status=500)
 	else:
 		form = RegistroDevolucaoForm()
 		context = {

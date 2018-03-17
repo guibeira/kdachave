@@ -15,7 +15,7 @@
      <link href="{% static 'css/materialicon.css' %}" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core Css -->
     <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-  
+
     <!-- DataTables -->
     <link href="{% static 'plugins/datatables/datatables.css' %}" rel="stylesheet">
     <link href="{% static 'plugins/datatables/Responsive-2.2.1/css/responsive.bootstrap.css' %}" rel="stylesheet">
@@ -38,8 +38,9 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet" />
-    <!-- toastr css -->
-    <link href="{% static 'bower_components/toastr/toastr.css' %}" rel="stylesheet">
+
+    <!-- bootstrap-notify css -->
+    <link href="{% static 'plugins/bootstrap-notify/bootstrap-notify.min.js' %}" rel="stylesheet">
     <!-- Datetimepiker bootstrap 3 -->
 
     <link rel="stylesheet" href="{% static '/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" />
@@ -561,8 +562,8 @@
     <script src="{% static 'bower_components/moment/locale/pt-br.js' %}"></script>
     <!-- Select2 Js -->
     <script src="{% static 'bower_components/select2/dist/js/select2.min.js' %}"></script>
-    <!-- toastr-for notifications -->
-    <script src="{% static 'bower_components/toastr/toastr.js' %}"></script>
+    <!-- bootstrap-notify notifications -->
+    <script src="{% static 'plugins/bootstrap-notify/bootstrap-notify.js' %}"></script>
 </body>
 
 </html>
@@ -570,9 +571,11 @@
 $(document).ready(function() {
   $('body').on('focus',".datetimepicker", function(){
     $(this).datetimepicker({
-        locale: 'pt-br'
+        // locale: 'pt-br'
     });
-});
+  });
+
+  $('select').select2();
 
 });
 </script>

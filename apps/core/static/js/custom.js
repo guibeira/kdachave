@@ -11,6 +11,7 @@
         },
         success: function(data){
           $("#saidaform").html(data);
+          $('select').select2();
         }
     });
   }
@@ -25,6 +26,7 @@
         },
         success: function(data){
           $("#retornoform").html(data);
+          $('select').select2();
         }
     });
   }

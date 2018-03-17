@@ -122,19 +122,23 @@
 <script src="{% static 'js/custom.js' %}"></script>
 <script>
 
-    setTimeout(function(){
-        $('.adevolder').click();
-    },200);
-    loadSaidaForm("{% url 'registro:saida' %}")
-    loadDevolucaoForm("{% url 'registro:devolucao' %}")
+    var csrftoken = $.cookie('csrftoken');
 
+    // recarrega os formulários e as tabelas
+    function reloadDatas(){
+      loadSaidaForm("{% url 'registro:saida' %}")
+      loadDevolucaoForm("{% url 'registro:devolucao' %}")
+      setTimeout(function(){
+        $('.adevolder').click();
+      },200);
+    }
+    reloadDatas()
+
+    // Envio dos formulário via ajax
     $(document).on('submit', '.sendform', function(e){
 
         e.preventDefault();
-        console.log('enviando form ');
-        var procedimentos = []
-        toastr.options.closeButton = true;
-        console.log($(this).serialize());
+
         $.ajax({
             type: "POST",
             url : $(this).attr('action'),
@@ -144,9 +148,19 @@
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             },
             success: function (retorno) {
-              console.log('deu boa');
-              loadSaidaForm("{% url 'registro:saida' %}")
-      
+              reloadDatas();
+              $.notify({
+                	title: '<strong>Salvo!</strong>',
+                	message: 'seu registro foi atualizado com sucesso'
+                },{
+                	type: 'success',
+                  animate: {
+                  		enter: 'animated fadeInRight',
+                  		exit: 'animated fadeOutRight'
+                  	}
+                }
+              );
+
             },
             error: function (retorno) {
                 data = JSON.parse(retorno.responseJSON);
@@ -154,14 +168,25 @@
                 // var val = Object.val(data);
                 for (i = 0; i < keys.length; i++) {
                     var res = keys[i].replace("_", " ");
-                    toastr.error(data[keys[i]][0].message, res.toUpperCase() + ' !')
+                    // toastr.error(data[keys[i]][0].message, res.toUpperCase() + ' !')
+                    $.notify({
+                        title: '<strong>'+res.toUpperCase() +'!</strong>',
+                        message: data[keys[i]][0].message
+                      },{
+                        type: 'danger',
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutRight'
+                          }
+                      }
+                    );
                 }
 
             }
         });
     });
 
-
+    // atualiza as abas via ajax
     $('a[data-toggle="tab"]').click(function(event) {
       var filter_by = $(this).attr("class");
       var aba = $(this).attr("href");
@@ -177,7 +202,6 @@
           }
       });
     });
-    var csrftoken = $.cookie('csrftoken');
     function onChangePropriedade(){
         $('#id_propriedade').on('change',function(){
             var idPropriedade = $(this).val();
@@ -214,49 +238,6 @@
 
         $('.table:not(.noDataTable)').DataTable({
             responsive: true
-        });
-
-
-        // $('.datetimepicker').datetimepicker({
-        //     format: 'YYYY-MM-DD HH:mm:ss'
-        // });
-
-        $('.btn-new').on('click',function(){
-            var durl = window.location.protocol+'//'+window.location.host+"/registro/create";
-             $.ajax({
-                type: "GET",
-                url: durl,
-                success: function(data){
-                    html = $.parseHTML(data);
-                    $('.modal-title').html("Novo Registro");
-
-                    $('.modal-body').html(html);
-                    onChangePropriedade();
-                    $('form', $('.modal-body')).attr('action', durl);
-
-                    // $('.selectpicker').selectpicker({});
-                    // $('.datetimepicker').datetimepicker({
-                    //     format: 'YYYY-MM-DD HH:mm:ss'
-                    // });
-
-                    $('form', $('.modal-body')).submit(function(e){
-                        e.preventDefault();
-                        $.ajax({
-                            type: "POST",
-                            url: durl,
-                            data: $('form', $('.modal-body')).serialize(),
-                            success: function(data){
-                                // refreshMolhos(propriedadeId);
-                                $('#modal-container-511775').modal('hide');
-                                location.reload();
-                            },
-                            error: function (data, xhr, ajaxOptions, thrownError) {
-                                $('.modal-body').html(data.responseText);
-                            }
-                        });
-                    });
-                }
-            });
         });
 
     });
