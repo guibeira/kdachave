@@ -15,10 +15,6 @@
      <link href="{% static 'css/materialicon.css' %}" rel="stylesheet" type="text/css">
     <!-- Bootstrap Core Css -->
     <link href="{% static 'plugins/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-    <link href="{% static 'plugins/bootstrap/css/bootstrap-select.css' %}" rel="stylesheet">
-
-    <!-- Bootstrap Select -->
-    <link href="{% static 'plugins/bootstrap-select/css/bootstrap-select.css' %}" rel="stylesheet">
 
     <!-- DataTables -->
     <link href="{% static 'plugins/datatables/datatables.css' %}" rel="stylesheet">
@@ -37,9 +33,14 @@
     <!-- Custom Css -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
+    <!-- Select2 Css -->
+    <link href="{% static 'bower_components/select2/dist/css/select2.css' %}" rel="stylesheet">
+
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{% static 'css/themes/all-themes.css' %}" rel="stylesheet" />
-    
+
+    <!-- bootstrap-notify css -->
+    <link href="{% static 'plugins/bootstrap-notify/bootstrap-notify.min.js' %}" rel="stylesheet">
     <!-- Datetimepiker bootstrap 3 -->
 
     <link rel="stylesheet" href="{% static '/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" />
@@ -511,10 +512,6 @@
 
     <!-- Bootstrap Core Js -->
     <script src="{% static 'plugins/bootstrap/js/bootstrap.js' %}"></script>
-    <script src="{% static 'plugins/bootstrap/js/bootstrap-select.js' %}"></script>
-
-    <!-- Select Plugin Js -->
-    <script src="{% static 'plugins/bootstrap-select/js/bootstrap-select.js' %}"></script>
 
     <!-- Slimscroll Plugin Js -->
     <script src="{% static 'plugins/jquery-slimscroll/jquery.slimscroll.js' %}"></script>
@@ -560,11 +557,27 @@
 
     <!-- moment Js -->
     <script src="{% static 'bower_components/moment/min/moment.min.js' %}"></script>
-
     <!-- moment Js -->
-    <script src="{% static '/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'bower_components/moment/locale/pt-br.js' %}"></script>
+    <!-- Select2 Js -->
+    <script src="{% static 'bower_components/select2/dist/js/select2.min.js' %}"></script>
+    <!-- bootstrap-notify notifications -->
+    <script src="{% static 'plugins/bootstrap-notify/bootstrap-notify.js' %}"></script>
 </body>
 
 </html>
+<script>
+$(document).ready(function() {
+  $('body').on('focus',".datetimepicker", function(){
+    $(this).datetimepicker({
+        locale: 'pt-br'
+    });
+  });
+
+  $('select').select2();
+
+});
+</script>
 {% block extrajs %}
 {% endblock extrajs %}

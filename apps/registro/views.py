@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistroForm
+from .forms import RegistroForm, RegistroSaidaForm, RegistroDevolucaoForm
 from .models import Registro
+from django.http import JsonResponse
+from django.urls import reverse
 from apps.propriedade.models import Propriedade
 from apps.molho.models import Molho
 from django.core.urlresolvers import reverse_lazy
@@ -8,10 +10,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 @login_required
-def create(request):
+def saida(request):
 	if request.method == "POST":
-		form = RegistroForm(request.POST)
+		form = RegistroSaidaForm(request.POST)
 		if form.is_valid():
 			registro = form.save()
 			registro.usuario = request.user
@@ -21,14 +24,35 @@ def create(request):
 				molho.save()
 			return redirect('home')
 		else:
-			context = {
-				'form': form,
-			}
-			return render(request, 'registro/registro_form.html', context)
+			return JsonResponse(form.errors.as_json(), safe=False, status=500)
 	else:
-		form = RegistroForm()
+		form = RegistroSaidaForm()
 		context = {
 			'form': form,
+			'action': reverse('registro:saida')
+		}
+		return render(request, 'registro/registro_form.html', context)
+
+
+@login_required
+def devolucao(request):
+	if request.method == "POST":
+		form = RegistroDevolucaoForm(request.POST)
+		if form.is_valid():
+			registro = form.save()
+			registro.usuario = request.user
+			registro.save()
+			for molho in registro.molhos.all():
+				molho.status = 0 # em uso
+				molho.save()
+			return redirect('home')
+		else:
+			return JsonResponse(form.errors.as_json(), safe=False, status=500)
+	else:
+		form = RegistroDevolucaoForm()
+		context = {
+			'form': form,
+			'action': reverse('registro:devolucao')
 		}
 		return render(request, 'registro/registro_form.html', context)
 
