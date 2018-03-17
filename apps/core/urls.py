@@ -6,8 +6,9 @@ from apps.pessoa import views as pessoaview
 urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'},name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
-    url(r'^$', views.index, name='home'),
+    url(r'^$', views.Index.as_view(), name='home'),
     url(r'^filtro/$', views.registro_filter, name='filter'),
+    url(r'^total-registros/$', views.TotaisRegitro.as_view(), name='total-registro'),
     url(r'propriedade/', include('apps.propriedade.urls', namespace="propriedade")),
     url(r'pessoa/', include('apps.pessoa.urls.pessoa', namespace="pessoa")),
     url(r'molho/', include('apps.molho.urls', namespace="molho")),

@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 from apps.registro.models import Registro, atrasados, devolvidos, nao_devolvidos
+from json_views.views import JSONDataView
 from apps.molho.models import Molho
 
 
@@ -25,15 +28,18 @@ def registro_filter(request):
 	return render(request, template_name, context)
 
 
-@login_required
-def index(request):
+class Index(LoginRequiredMixin, TemplateView):
 	template_name = 'index.html'
-	context = {
-		'atrasados': atrasados(),
-		'devolvidos': devolvidos(),
-		'nao_devolvidos': nao_devolvidos(),
-	}
-	return render(request, template_name, context)
+
+
+class TotaisRegitro(LoginRequiredMixin, JSONDataView):
+
+	def get_context_data(self, **kwargs):
+		context = super(TotaisRegitro, self).get_context_data(**kwargs)
+		context['atrasados'] = atrasados().count()
+		context['devolvidos'] = devolvidos().count()
+		context['nao_devolvidos'] = 12 # nao_devolvidos().count()
+		return context
 
 
 @login_required

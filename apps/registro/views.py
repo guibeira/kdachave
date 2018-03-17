@@ -52,6 +52,7 @@ def devolucao(request):
 		form = RegistroDevolucaoForm()
 		context = {
 			'form': form,
+			'action': reverse('registro:devolucao')
 		}
 		return render(request, 'registro/registro_form.html', context)
 

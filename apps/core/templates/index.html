@@ -15,7 +15,7 @@
                 </div>
                 <div class="content">
                     <div class="text">À Devolver</div>
-                    <div class="number count-to" data-from="0" data-to="{{nao_devolvidos|length}}" data-speed="15" data-fresh-interval="20"></div>
+                    <div id="adevolver-total"class="number count-to" data-from="0" data-to="" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="content">
                     <div class="text" style="font-size:12px!important;">Devolvidos</div>
-                    <div class="number count-to" data-from="0" data-to="{{ devolvidos|length }}" data-speed="1000" data-fresh-interval="20"></div>
+                    <div id="devolvidos-total" class="number count-to" data-from="0" data-to="" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="content">
                     <div class="text">Atrasados</div>
-                    <div class="number count-to" data-from="0" data-to="{{ atrasados|length }}" data-speed="1000" data-fresh-interval="20"></div>
+                    <div id="atrasados-total" class="number count-to" data-from="0" data-to="" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -128,9 +128,11 @@
     function reloadDatas(){
       loadSaidaForm("{% url 'registro:saida' %}")
       loadDevolucaoForm("{% url 'registro:devolucao' %}")
+
       setTimeout(function(){
         $('.adevolder').click();
-      },200);
+        updateDashBoard()
+      },500);
     }
     reloadDatas()
 
@@ -221,15 +223,21 @@
     }
 
     function updateDashBoard(){
-        var durl = window.location.protocol+'//'+window.location.host+"/updateDashboard/";
+
         $.ajax({
-            type: "POST",
-            url: durl,
+            type: "get",
+            url: "{% url 'total-registro'%}",
             beforeSend: function(xhr, settings) {
               xhr.setRequestHeader("X-CSRFToken", csrftoken);
             },
             success: function(data){
-                $('.dashboard-molhos').html(data);
+              $('#adevolver-total').attr('data-to', data.nao_devolvidos);
+              $('#devolvidos-total').attr('data-to', data.devolvidos);
+              $('#atrasados-total').attr('data-to', data.atrasados);
+              $('#adevolver-total').html(data.nao_devolvidos);
+              $('#devolvidos-total').html(data.devolvidos);
+              $('#atrasados-total').html(data.atrasados);
+
             }
         });
     }
