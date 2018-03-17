@@ -15,7 +15,7 @@
         }
     });
   }
-  // Carraga o formulário de devolução que é utilizado na home
+  // Carrega o formulário de devolução que é utilizado na home
   function loadDevolucaoForm(url){
     $.ajax({
         type: "GET",
