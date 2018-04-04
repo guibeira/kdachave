@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistroForm, RegistroSaidaForm, RegistroDevolucaoForm
+from .forms import RegistroForm, RegistroSaidaGetForm, RegistroSaidaPostForm, RegistroDevolucaoForm
 from .models import Registro
 from django.http import JsonResponse
 from django.urls import reverse
@@ -32,7 +32,7 @@ class SearchFilter(LoginRequiredMixin, ListView):
 @login_required
 def saida(request):
 	if request.method == "POST":
-		form = RegistroSaidaForm(request.POST)
+		form = RegistroSaidaPostForm(request.POST)
 		if form.is_valid():
 			registro = form.save()
 			registro.usuario = request.user
@@ -44,7 +44,7 @@ def saida(request):
 		else:
 			return JsonResponse(form.errors.as_json(), safe=False, status=500)
 	else:
-		form = RegistroSaidaForm()
+		form = RegistroSaidaGetForm()
 		context = {
 			'form': form,
 			'action': reverse('registro:saida')
