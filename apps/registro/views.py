@@ -6,9 +6,27 @@ from django.urls import reverse
 from apps.propriedade.models import Propriedade
 from apps.molho.models import Molho
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class SearchFilter(LoginRequiredMixin, ListView):
+	template_name = 'tabela.html'
+	model = Registro
+	context_object_name = "registros"
+
+	def get_queryset(self, *args, **kwargs):
+		try:
+			resposavel = self.kwargs['resposavel']
+		except:
+			resposavel = ""
+		if (resposavel != ""):
+			object_list = self.model.objects.filter(resposavel_name__icontains = name)
+		else:
+			object_list = self.model.objects.all()
+		return object_list
 
 
 @login_required
@@ -56,6 +74,7 @@ def devolucao(request):
 		}
 		return render(request, 'registro/registro_form.html', context)
 
+
 @login_required
 def update(request, pk):
 	registro = get_object_or_404(Registro,pk=pk)
@@ -75,6 +94,7 @@ def update(request, pk):
 			'form': form,
 		}
 		return render(request, 'registro/registro_form.html', context)
+
 
 class DeleteRegistro(LoginRequiredMixin, DeleteView):
 	model = Registro

@@ -51,6 +51,7 @@ LOCAL_APPS = [
 ]
 THIRD_PARTY = [
     'widget_tweaks',
+    'django_extensions',
 ]
 
 INSTALLED_APPS = DJANGO_APPS+LOCAL_APPS+THIRD_PARTY
