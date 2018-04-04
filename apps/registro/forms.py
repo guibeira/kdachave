@@ -15,7 +15,18 @@ class RegistroForm(forms.ModelForm):
 				  ]
 
 
-class RegistroSaidaForm(forms.ModelForm):
+class RegistroSaidaGetForm(forms.ModelForm):
+
+	class Meta:
+		model = Registro
+		fields = [
+				  'responsavel',
+				  'dataEntrega',
+				  'dataPrevisaoRetorno',
+				  'propriedade',
+				  ]
+
+class RegistroSaidaPostForm(forms.ModelForm):
 
 	class Meta:
 		model = Registro
@@ -26,7 +37,6 @@ class RegistroSaidaForm(forms.ModelForm):
 				  'propriedade',
 				  'molhos',
 				  ]
-
 
 class RegistroDevolucaoForm(forms.ModelForm):
 

@@ -128,6 +128,35 @@
 <script>
 
     var csrftoken = $.cookie('csrftoken');
+
+    $(document).on('change', '#id_propriedade', function(e){
+
+        var propriedade = $(this).val();
+        if (propriedade != ""){
+            $.ajax({
+                type: "GET",
+                url: "{% url 'molho:searchmolho' %}",
+                data: {'propriedade': propriedade},
+                beforeSend: function(xhr, settings) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                },
+                success: function(data){
+
+                  form = $('.sendform', $('#saidaform'));
+                  elemento = $(form).children().children()[4];
+                  // $(elemento).append(data)
+                  $(data).insertAfter(elemento)
+                  $('select').select2();
+                  // $('#id_molhos').selectpicker("refresh");
+                // console.log($('#id_propriedade').append(data));
+
+                }
+            });
+        }else{
+          $('#id_molhos', $(document)).parent().parent().parent().remove();
+        }
+    });
+
     $(document).on("keyup", "#search-input", function(e){
       if(this.value.length == 0 ){
         $('#search-div').html('');

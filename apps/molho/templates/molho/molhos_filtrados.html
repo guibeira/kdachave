@@ -1,0 +1,11 @@
+<div class="form-group">
+      <label class="col-md-4 control-label text-left" for="Molhos">Molhos</label>
+      <div class="col-md-8">
+        <div class="form-line">
+                <select name="molhos"  class="form-control" required="" id="id_molhos" aria-hidden="true">
+                {% for molho in molhos %}
+                <option value="{{molho.pk}}">{{molho}}</option>
+                {% endfor %}
+        </div>
+      </div>
+    </div>
