@@ -38,7 +38,7 @@ class TotaisRegitro(LoginRequiredMixin, JSONDataView):
 		context = super(TotaisRegitro, self).get_context_data(**kwargs)
 		context['atrasados'] = atrasados().count()
 		context['devolvidos'] = devolvidos().count()
-		context['nao_devolvidos'] = 12 # nao_devolvidos().count()
+		context['nao_devolvidos'] = nao_devolvidos().count()
 		return context
 
 

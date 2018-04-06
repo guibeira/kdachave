@@ -6,7 +6,7 @@ now = datetime.now(timezone.utc)
 
 class Registro(models.Model):
     dataEntrega = models.DateTimeField("Data Entrega")
-    dataPrevisaoRetorno = models.DateTimeField("Data de Previsão do Retorno")
+    dataPrevisaoRetorno = models.DateTimeField("Previsão do Retorno")
     dataRetorno = models.DateTimeField("Data Retorno", null=True, blank=True)
     usuario = models.ForeignKey(
         User, related_name='usuario', null=True, blank=True

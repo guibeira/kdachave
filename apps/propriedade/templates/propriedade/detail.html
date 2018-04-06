@@ -149,7 +149,7 @@
 
         $('.btn-new').on('click',function(){
           var propriedadeId = $(this).attr('propriedadeId');
-          var durl = window.location.protocol+'//'+window.location.host+"/molho/create/"+propriedadeId+"/";
+          var durl = window.location.protocol+'//'+window.location.host+"/molho/criar/"+propriedadeId+"/";
           $.ajax({
                 type: "GET",
                 url: durl,
@@ -233,7 +233,7 @@
                   xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 },
                 success: function(data){
-                    
+
                 },
                 error: function (data, xhr, ajaxOptions, thrownError) {
                     alert("Deu erro");

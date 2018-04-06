@@ -1,50 +1,39 @@
 {% load check_type_field %}
 {% load widget_tweaks %}
 
-  <form class="form-horizontal sendform" action="{{action}}"  method="POST">
-    <fieldset>
-    <!-- Form Name -->
+<form method="POST">
     {% csrf_token %}
     {% for field in form %}
-    <div class="form-group">
-      <label class="col-md-4 control-label text-left" for="{{field.label}}">{{field.label}}</label>
-      <div class="col-md-8">
-        <div class="form-line">
-            {% if field|fieldtype == "Select" %}
-                {{ field|attr:"class:selectpicker form-control" }}
-            {% elif field|fieldtype == "SelectMultiple" %}
-                {{ field|attr:"multiple class:selectpicker form-control" }}
-            {% elif field|fieldtype == "DateTimeInput" %}
+      <label for="password">{{field.label}}</label>
+      <div class="form-group {{field.label}}">
+          <div class="form-line">
+            {% if field|fieldtype == "DateTimeInput" %}
                 {{ field|attr:"class:form-control datetimepicker" }}
             {% else %}
                 {{ field|attr:"class:form-control" }}
             {% endif %}
-        </div>
+          </div>
+      </div>
+     {% endfor %}
+     {% if form.errors %}
+       {% for field in form %}
+             {% for error in field.errors %}
+                 <div class="alert alert-danger">
+                     <strong>{{ error|escape }}</strong>
+                 </div>
+             {% endfor %}
+         {% endfor %}
+         {% for error in form.non_field_errors %}
+             <div class="alert alert-danger">
+                 <strong>{{ error|escape }}</strong>
+             </div>
+       {% endfor %}
+     {% endif %}
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button  type="submit" name="singlebutton" class="btn btn-block btn-primary">Salvar</button>
       </div>
     </div>
-    {% endfor %}
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endif %}
-    <br>
-    <!-- Button -->
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <div class="col-md-4">
-          <button  type="submit" name="singlebutton" class="btn btn-primary">Salvar</button>
-        </div>
-      </div>
-      <br>
-  </fieldset>
+    <br><br>
 </form>

@@ -21,7 +21,7 @@ def get_molho_by_propriedade(request, pk):
 
 @login_required
 def create(request, pk):
-    propriedade = get_object_or_404(Propriedade,pk=pk)
+    propriedade = get_object_or_404(Propriedade, pk=pk)
     if request.method == "POST":
         form = MolhoForm(request.POST)
         if form.is_valid():
@@ -86,7 +86,6 @@ class MolhoSearch(LoginRequiredMixin, ListView):
             queryset = self.model.objects.none()
         else:
             queryset = self.model.objects.filter(propriedade_id=propriedade)
-        print(queryset)
         return queryset
 
 

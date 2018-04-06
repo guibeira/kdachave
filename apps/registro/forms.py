@@ -8,7 +8,6 @@ class RegistroForm(forms.ModelForm):
 		model = Registro
 		fields = ['dataEntrega',
 				  'dataPrevisaoRetorno',
-				  'dataRetorno',
 				  'responsavel',
 				  'propriedade',
 				  'molhos',
@@ -42,4 +41,4 @@ class RegistroDevolucaoForm(forms.ModelForm):
 
 	class Meta:
 		model = Registro
-		fields = ['molhos', 'dataEntrega']
+		fields = ['molhos', 'dataRetorno']

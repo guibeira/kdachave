@@ -9,8 +9,11 @@
                         </button >
                         <span>{{registro.responsavel}}</span> <span style="color:blue;">{{registro.dataPrevisaoRetorno}}</span>
                         <div style="float:right;">
+                            <a href="{% url 'registro:devolucao' registro.pk %}" class="btn btn-success btn-devolucao">
+                              <i class="material-icons">details</i>
+                            </a>
                             <a id="modal-511775" href="#modal-container-5117751" registroId="{{registro.pk}}" role="button" class="btn btn-info btn-edit" data-toggle="modal">
-                                <i class="material-icons">mode_edit</i>
+                              <i class="material-icons">mode_edit</i>
                             </a>
                             <a href="{% url 'registro:delete' registro.pk %}" class="btn btn-danger">
                                 <i class="material-icons">delete</i>
@@ -99,7 +102,6 @@ $(document).ready(function() {
     });
 
     $('.btn-edit').on('click',function(){
-        console.log($('#modal-container-5117751'));
         var registroId = $(this).attr('registroId');
         var durl = window.location.protocol+'//'+window.location.host+"/registro/update/"+registroId+"/";
          $.ajax({
@@ -112,7 +114,7 @@ $(document).ready(function() {
                 $('.modal-body').html(html);
                 onChangePropriedade();
                 $('form', $('.modal-body')).attr('action', durl);
-
+                $('select').select2({ width: '100%' });
                 $('form', $('.modal-body')).submit(function(e){
                     e.preventDefault();
                     $.ajax({
