@@ -177,13 +177,13 @@
 
     // Envio dos formulário via ajax
     // * separar futuramente para um função
-    $(document).on('submit', '.sendform', function(e){
+    $(document).on('submit', 'form', function(e){
 
         e.preventDefault();
 
         $.ajax({
             type: "POST",
-            url : $(this).attr('action'),
+            url : "{% url 'registro:saida' %}",
             traditional: true,
             data: $(this).serialize(),
             beforeSend: function (xhr, settings) {

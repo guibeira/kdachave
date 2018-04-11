@@ -4,3 +4,4 @@ media/propriedades/*
 .env
 venv
 db.sqlite3
+Pipfile
