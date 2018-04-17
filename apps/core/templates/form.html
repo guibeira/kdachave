@@ -117,11 +117,13 @@
 
                         if (!("erro" in dados)) {
                             //Atualiza os campos com os valores da consulta.
+
                             $("#id_cep").val(dados.cep);
                             $("#id_logradouro").val(dados.logradouro);
                             $("#id_cidade").val(dados.localidade);
                             $("#id_estado").val(dados.uf);
                             $("#id_bairro").val(dados.bairro);
+                            $("#id_estado").select2();
                         } //end if.
                         else {
                             //CEP pesquisado não foi encontrado.
@@ -141,10 +143,7 @@
         });
 
         $('.table').DataTable();
-        $('select').selectpicker({
-            style: 'btn-info',
-            size: 4
-        });
+
         $('#id_telefoneResidencial, #id_telefoneComercial, #id_celular1, #id_celular2').inputmask('(99) 99999-9999');
         $('#id_cep').inputmask('99999-999');
     });

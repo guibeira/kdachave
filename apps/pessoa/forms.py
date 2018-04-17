@@ -3,6 +3,10 @@ from .models import Pessoa
 from django.contrib.auth.models import User
 
 class PessoaForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['telefoneComercial'].widget.attrs['class'] = 'fone'
     class Meta:
         model = Pessoa
         fields = [
