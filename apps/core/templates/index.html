@@ -44,16 +44,22 @@
     </div>
     <!-- #END# Widgets -->
     <!-- Formulários carregados via ajax -->
-    <div class="row clearfix">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="card">
-                <div class="header text-center"><h2>Saída</h2></div>
-                  <div id="saidaform" class="container-fluid">
+    <div class="card">
+        <div class="header">
+          <a id="collapse-saida" class="btn bg-pink waves-effect m-b-15" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+              Sáida
+          </a>
+        </div>
+        <div class="body">
+        <div class="collapse" id="collapseExample" aria-expanded="false" style="">
+          <div class="header text-center"><h2>Saída</h2></div>
+            <div id="saidaform" class="container-fluid">
 
-                  </div>
+            </div>
             </div>
         </div>
     </div>
+
     <!-- #Final dos Formulários-->
     <!-- Tabela dos registros -->
     <div class="row clearfix">
@@ -282,6 +288,9 @@
         });
     }
 
+    $(document).on('click', '#collapse-saida', function(e){
+      $('select').select2();
+    });
     $(document).on('click', '.btn-devolucao', function(e){
       e.preventDefault();
       var durl = $(this).attr('href');
