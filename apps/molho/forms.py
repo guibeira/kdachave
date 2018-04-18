@@ -3,7 +3,7 @@ from .models import Molho
 
 
 class MolhoForm(forms.ModelForm):
-    
+
     class Meta:
         model = Molho
-        fields = [ 'descricao', 'chaves', 'controles',]
+        fields = ['descricao', 'chaves', 'controles', 'observacao']

@@ -10,7 +10,7 @@ class RegistroForm(forms.ModelForm):
 				  'dataPrevisaoRetorno',
 				  'responsavel',
 				  'propriedade',
-				  'molhos',
+				  'molhos'
 				  ]
 
 

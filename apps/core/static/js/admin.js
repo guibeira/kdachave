@@ -48,7 +48,7 @@ $.AdminBSB.options = {
 */
 $.AdminBSB.leftSideBar = {
     activate: function () {
-        
+
         var urlpath = window.location.pathname.split('/');
         var hrefpath= window.location.pathname;
         if(urlpath[1]){
@@ -79,7 +79,6 @@ $.AdminBSB.leftSideBar = {
         //When page load
         $.each($('.menu .list li.active'), function (i, val) {
             var $activeAnchors = $(val).find('a:eq(0)');
-            console.log($activeAnchors);
 
             $activeAnchors.addClass('toggled');
             $activeAnchors.next().show();
