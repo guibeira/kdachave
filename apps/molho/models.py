@@ -15,7 +15,7 @@ class Molho(models.Model):
 	status = models.IntegerField("Status do Molho",
                                     choices=STATUS,
                                     blank=True,
-                                    null=True,
+									default=1
                                 )
 	def __str__(self):
 		return self.descricao
