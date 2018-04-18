@@ -10,6 +10,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 @login_required
 def get_molho_by_propriedade(request, pk):
     template_name = 'molho/get_molho_by_propriedade.html'
@@ -18,6 +19,7 @@ def get_molho_by_propriedade(request, pk):
         'molhos' : molhos
     }
     return render(request, template_name, context)
+
 
 @login_required
 def create(request, pk):
@@ -40,6 +42,7 @@ def create(request, pk):
             'form': form,
         }
         return render(request, 'molho/form.html', context)
+
 
 @login_required
 def update_molho(request, pk):
