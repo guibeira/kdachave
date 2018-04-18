@@ -136,7 +136,6 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
 
 @login_required
 def change_password(request):
-    print('RESET PASSWORD')
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, data=request.POST)
         if form.is_valid():
