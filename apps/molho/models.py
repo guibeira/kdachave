@@ -17,5 +17,6 @@ class Molho(models.Model):
                                     blank=True,
 									default=1
                                 )
+	observacao = models.TextField("Observação", blank=True, null=True)
 	def __str__(self):
 		return self.descricao

@@ -73,19 +73,6 @@ def update(request, pk):
 		return render(request, 'registro/registro_form.html', context)
 
 
-class DeleteRegistro(LoginRequiredMixin, DeleteView):
-	model = Registro
-	success_url = reverse_lazy('home')
-	template_name = 'confirmdelete.html'
-
-	def delete(self, request, *args, **kwargs):
-		self.object = self.get_object()
-		for molho in self.object.molhos.all():
-			molho.status = None
-			molho.save()
-		self.object.delete()
-		return redirect('home')
-
 @login_required
 def getmolhos(request, pk):
 	propriedade = get_object_or_404(Propriedade,pk=pk)
