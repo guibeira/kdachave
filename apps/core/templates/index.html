@@ -155,8 +155,8 @@
                   xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 },
                 success: function(data){
+                  $('.molho-div').remove();
                   form = $('.sendform', $('#saidaform'));
-
                   $(data).insertAfter($('.Propriedade'))
                   $('select').select2();
                 }
@@ -276,6 +276,7 @@
                   xhr.setRequestHeader("X-CSRFToken", csrftoken);
                 },
                 success: function(data){
+
                     $('#id_molhos').html(data);
                     $('#id_molhos').selectpicker("refresh");
                 }
