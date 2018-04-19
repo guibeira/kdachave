@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegistroForm, RegistroSaidaGetForm, RegistroSaidaPostForm, RegistroDevolucaoForm
 from .models import Registro
+from django.views.generic import UpdateView
 from django.http import JsonResponse, HttpResponse
 from django.urls import reverse
 from apps.propriedade.models import Propriedade
@@ -54,33 +55,35 @@ def saida(request):
 
 @login_required
 def update(request, pk):
-	registro = get_object_or_404(Registro,pk=pk)
-	if request.method == "POST":
-		form = RegistroForm(request.POST, instance=registro)
-		if form.is_valid():
-			registro = form.save()
-			return redirect('home')
-		else:
-			context = {
-				'form': form,
-			}
-			return render(request, 'registro/registro_form.html', context)
-	else:
-		form = RegistroForm(instance=registro)
-		context = {
-			'form': form,
-		}
-		return render(request, 'registro/registro_form.html', context)
+    registro = get_object_or_404(Registro, pk=pk)
+
+    if request.method == "POST":
+        form = RegistroForm(request.POST, instance=registro)
+        if form.is_valid():
+            registro = form.save()
+            print('dentro dessa parada')
+            return redirect('home')
+        else:
+            context = {
+                'form': form,
+            }
+            return render(request, 'registro/registro_form.html', context)
+    else:
+        form = RegistroForm(instance=registro)
+        context = {
+            'form': form,
+        }
+    return render(request, 'registro/registro_form.html', context)
 
 
 @login_required
 def getmolhos(request, pk):
-	propriedade = get_object_or_404(Propriedade,pk=pk)
-	molhos = Molho.objects.filter(propriedade=propriedade).exclude(status__in=(0,2,3));
-	context = {
-		"molhos":molhos,
-	}
-	return render(request, 'registro/molhosToSelect.html', context)
+    propriedade = get_object_or_404(Propriedade,pk=pk)
+    molhos = Molho.objects.filter(propriedade=propriedade).exclude(status__in=(0,2,3));
+    context = {
+        "molhos": molhos,
+    }
+    return render(request, 'registro/molhosToSelect.html', context)
 
 
 @login_required
@@ -90,10 +93,8 @@ def devolucao(request, pk):
         form = RegistroDevolucaoForm(request.POST, instance=registro)
         if form.is_valid():
             registro = form.save()
-            print("deu boa")
             return redirect('home')
         else:
-            print("deu ruim")
             context = {
                 'form': form,
             }
@@ -104,3 +105,15 @@ def devolucao(request, pk):
             'form': form
         }
         return render(request, 'registro/registro_form.html', context)
+
+
+# class Devolucao(LoginRequiredMixin, UpdateView):
+#     model = Registro
+#     form_class = RegistroDevolucaoForm
+#     success_url = reverse_lazy('home')
+#     template_name = 'registro/registro_form.html'
+#
+#     def form_invalid(self, form):
+#         print('dentro do formulário invalido')
+#         if self.request.is_ajax():
+#             return self.render_to_json_response(form.errors, status=400)

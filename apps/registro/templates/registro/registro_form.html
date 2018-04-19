@@ -1,7 +1,7 @@
 {% load check_type_field %}
 {% load widget_tweaks %}
 
-<form method="POST">
+<form method="POST" action="{{action}}">
     {% csrf_token %}
     {% for field in form %}
       <label for="password">{{field.label}}</label>

@@ -200,11 +200,15 @@
     // * separar futuramente para um função
     $(document).on('submit', 'form', function(e){
 
+
+
+        var url = $(this).attr('action');
+
         e.preventDefault();
 
         $.ajax({
             type: "POST",
-            url : "{% url 'registro:saida' %}",
+            url : url,
             traditional: true,
             data: $(this).serialize(),
             beforeSend: function (xhr, settings) {
