@@ -270,6 +270,7 @@
         $('#id_propriedade').on('change',function(){
             var idPropriedade = $(this).val();
             var durl = window.location.protocol+'//'+window.location.host+"/registro/getmolhos/"+idPropriedade+"/";
+            alert('ja ta aqui');
             $.ajax({
                 type: "POST",
                 url: durl,

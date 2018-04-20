@@ -95,9 +95,29 @@ $(document).ready(function() {
                 html = $.parseHTML(data);
                 $('.modal-title').html("Edição Registro");
                 $('.modal-body').html(html);
-                onChangePropriedade();
+
                 $('form', $('.modal-body')).attr('action', durl);
                 $('select').select2({ width: '100%' });
+                $('#id_propriedade', $('.modal-body')).on('change', function(e){
+
+                    var propriedade = $(this).val();
+                    if (propriedade != ""){
+                        $.ajax({
+                            type: "GET",
+                            url: "{% url 'molho:searchmolho' %}",
+                            data: {'propriedade': propriedade},
+                            beforeSend: function(xhr, settings) {
+                              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                            },
+                            success: function(data){
+                              $('#id_molhos').html(data);
+                              $('#id_molhos').select2({ width: '100%' });
+                            }
+                        });
+                    }else{
+                      // $('#id_molhos', $(document)).parent().parent().parent().remove();
+                    }
+                });
             }
         });
     });
