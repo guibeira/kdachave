@@ -14,6 +14,7 @@ class RegistroForm(forms.ModelForm):
             self.fields['molhos'].choices = choices
             self.fields['molhos'].initial = registro.molhos.all()
 
+
     class Meta:
         model = Registro
         fields = ['dataEntrega',
@@ -53,4 +54,4 @@ class RegistroDevolucaoForm(forms.ModelForm):
 
     class Meta:
         model = Registro
-        fields = ['molhos', 'dataRetorno']
+        fields = ['dataRetorno']

@@ -1,0 +1,70 @@
+{% load check_type_field %}
+{% load widget_tweaks %}
+
+<form method="POST" action="{{action}}">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table class="table table-bordered">
+
+            <thead>
+
+                <th>
+                    Molho
+                </th>
+                <th>
+                    Observação
+                </th>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+
+                <tr>
+                    <td>
+                        {{form.instance}}
+                    </td>
+                    {% for field in form.visible_fields %}
+                    <td>
+                        {% render_field field class='form-control' %}
+                    </td>
+                    {% endfor %}
+                    {% for hidden in form.hidden_fields %}
+                    {{hidden}}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% for field in form %}
+      <label for="password">{{field.label}}</label>
+      <div class="form-group {{field.label}}">
+          <div class="form-line">
+            {% if field|fieldtype == "DateTimeInput" %}
+                {{ field|attr:"class:form-control datetimepicker" }}
+            {% else %}
+                {{ field|attr:"class:form-control" }}
+            {% endif %}
+          </div>
+      </div>
+     {% endfor %}
+     {% if form.errors %}
+       {% for field in form %}
+             {% for error in field.errors %}
+                 <div class="alert alert-danger">
+                     <strong>{{ error|escape }}</strong>
+                 </div>
+             {% endfor %}
+         {% endfor %}
+         {% for error in form.non_field_errors %}
+             <div class="alert alert-danger">
+                 <strong>{{ error|escape }}</strong>
+             </div>
+       {% endfor %}
+     {% endif %}
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button  type="submit" name="singlebutton" class="btn btn-block btn-primary">Salvar</button>
+      </div>
+    </div>
+    <br><br>
+</form>
