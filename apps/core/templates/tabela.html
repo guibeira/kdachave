@@ -94,26 +94,10 @@ $(document).ready(function() {
             success: function(data){
                 html = $.parseHTML(data);
                 $('.modal-title').html("Edição Registro");
-
                 $('.modal-body').html(html);
                 onChangePropriedade();
                 $('form', $('.modal-body')).attr('action', durl);
                 $('select').select2({ width: '100%' });
-                $('form', $('.modal-body')).submit(function(e){
-                    e.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        url: durl,
-                        data: $('form', $('.modal-body')).serialize(),
-                        success: function(data){
-                            $('#modal-container-5117751').modal('hide');
-                            location.reload();
-                        },
-                        error: function (data, xhr, ajaxOptions, thrownError) {
-                            $('.modal-body').html(data.responseText);
-                            }
-                    });
-                });
             }
         });
     });

@@ -63,13 +63,12 @@ def update(request, pk):
         form = RegistroForm(request.POST, instance=registro)
         if form.is_valid():
             registro = form.save()
-            print('dentro dessa parada')
-            return redirect('home')
+            return HttpResponse(status=200)
         else:
             context = {
                 'form': form,
             }
-            return render(request, 'registro/registro_form.html', context)
+            return JsonResponse(form.errors.as_json(), safe=False, status=500)
     else:
         form = RegistroForm(instance=registro)
         context = {
