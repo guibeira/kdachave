@@ -107,7 +107,7 @@ def devolucao(request, pk):
                 'form': form,
                 'formset': formset
             }
-            return render(request, template_name, context)
+            return JsonResponse(form.errors.as_json(), safe=False, status=500)
     else:
         form = RegistroDevolucaoForm(instance=registro)
         context = {

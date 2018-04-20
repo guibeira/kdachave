@@ -52,6 +52,10 @@ class RegistroSaidaPostForm(forms.ModelForm):
 
 class RegistroDevolucaoForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs ):
+        super().__init__(*args, **kwargs)
+        self.fields['dataRetorno'].required = True
+
     class Meta:
         model = Registro
         fields = ['dataRetorno']

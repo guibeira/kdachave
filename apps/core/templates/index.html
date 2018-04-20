@@ -196,13 +196,12 @@
     reloadDatas()
 
 
-    // Envio dos formulário via ajax
+    // Envio de todos formulários via ajax
     // * separar futuramente para um função
     $(document).on('submit', 'form', function(e){
 
         var url = $(this).attr('action');
         e.preventDefault();
-        alert('enviando por aqui');
         $.ajax({
             type: "POST",
             url : url,
